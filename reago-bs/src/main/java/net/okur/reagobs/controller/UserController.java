@@ -25,8 +25,15 @@ public class UserController {
 
   @PostMapping("/api/v1/users/")
   public GenericResponse createUser(@Valid @RequestBody User user) {
+
     user = userService.createUser(user);
     return new GenericResponse("User is created. " + user.getUsername());
+  }
+
+  @GetMapping("/api/v1/users/")
+  public ResponseEntity<?> getAllUsers() {
+
+    return ResponseEntity.ok(userService.getAllUser());
   }
 
   @PutMapping("/api/v1/users/")

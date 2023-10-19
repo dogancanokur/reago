@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {signUp} from "./api.js";
 import {Input} from "./components/Input.jsx";
 
@@ -24,6 +24,7 @@ export function SignUp() {
     }, [email]);
 
     useEffect(() => {
+        console.log("useEff");
         setValidationErrors(lastErrors => ({...lastErrors, password: undefined}));
     }, [password]);
 
@@ -51,6 +52,12 @@ export function SignUp() {
             setApiProgress(false);
         }
     }
+    const passwordRepeatError = useMemo(() => {
+        if (password && password !== passwordRepeat) {
+            return "Password mismatch.";
+        }
+    }, [password, passwordRepeat]);
+
 
     let isSignUpButtonDisabled = apiProgress || (!password || password !== passwordRepeat);
 
@@ -64,16 +71,16 @@ export function SignUp() {
                                validationError={validationErrors?.username}
                                onChange={(event) => setUsername(event.target.value)}></Input>
 
-                        <Input id={'email'} name={'email'} labelText={'email'}
+                        <Input id={'email'} name={'email'} labelText={'Email'}
                                validationError={validationErrors?.email}
                                onChange={(event) => setEmail(event.target.value)}></Input>
 
-                        <Input id={'password'} name={'password'} labelText={'password'}
+                        <Input id={'password'} name={'password'} labelText={'Password'}
                                validationError={validationErrors?.password} type={'password'}
                                onChange={(event) => setPassword(event.target.value)}></Input>
 
-                        <Input id={'passwordRepeat'} name={'passwordRepeat'} labelText={'passwordRepeat'}
-                               validationError={validationErrors?.passwordRepeat} type={'password'}
+                        <Input id={'passwordRepeat'} name={'passwordRepeat'} labelText={'Password Repeat'}
+                               validationError={passwordRepeatError} type={'password'}
                                onChange={(event) => setPasswordRepeat(event.target.value)}></Input>
 
                         {successMessage && <div className={'alert alert-success'}>{successMessage}</div>}
