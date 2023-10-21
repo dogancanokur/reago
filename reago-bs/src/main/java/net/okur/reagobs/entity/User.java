@@ -21,7 +21,7 @@ public class User {
   private Long id;
 
   @Size(message = "{warning.user.username.length}", min = 3, max = 25)
-  @Column(name = "username", nullable = false, unique = true, length = 25)
+  @Column(name = "username", nullable = false, length = 25)
   @UniqueUsername
   private String username;
 
