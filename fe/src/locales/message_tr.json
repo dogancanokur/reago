@@ -6,5 +6,11 @@
   "email": "Email",
   "passwordMismatch": "Şifre eşleşmiyor.",
   "genericError": "Beklenmedik bir hata oluştu.",
-  "homepage": "Ana Sayfa"
+  "homepage": "Ana Sayfa",
+  "already activated": "Etkinleştirildi.",
+  "active": "Aktif",
+  "not-active": "Pasif",
+  "isActive": "Aktiflik Durumu",
+  "id": "ID",
+  "user-list": "Kullanıcı Listesi"
 }

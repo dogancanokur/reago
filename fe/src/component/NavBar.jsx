@@ -19,6 +19,11 @@ export function NavBar() {
                         <Link className={'nav-link'} to={'/signup'}>{t('Sign Up')}</Link>
                     </li>
                 </ul>
+                <ul className={'navbar-nav'}>
+                    <li className={'nav-item'}>
+                        <Link className={'nav-link'} to={'/users'}>{t('user-list')}</Link>
+                    </li>
+                </ul>
             </div>
         </nav>);
 }

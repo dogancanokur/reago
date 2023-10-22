@@ -6,5 +6,11 @@
   "email": "Email",
   "passwordMismatch": "Password Mismatch",
   "genericError": "An unexpected error occurred.",
-  "homepage": "Home Page"
+  "homepage": "Home Page",
+  "already activated": "Already Activated.",
+  "active": "Active",
+  "not-active": "Passive",
+  "isActive": "Activity Status",
+  "id": "ID",
+  "user-list": "User List"
 }

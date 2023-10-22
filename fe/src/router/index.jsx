@@ -3,6 +3,7 @@ import {Home} from "../pages/Home/index.jsx";
 import {SignUp} from "../pages/SignUp/index.jsx";
 import App from "../App.jsx";
 import {Activation} from "../pages/Activation/activation.jsx";
+import {User} from "../pages/User/User.jsx";
 
 
 export default createBrowserRouter([
@@ -12,6 +13,7 @@ export default createBrowserRouter([
         // errorElement: <div>404</div>,
         children: [
             {path: "/", Component: Home},
+            {path: "/users", Component: User},
             {path: "/signup", Component: SignUp},
             {path: "/activation/:token", Component: Activation}
         ]
