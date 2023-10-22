@@ -1,6 +1,7 @@
 package net.okur.reagobs.controller;
 
 import jakarta.validation.Valid;
+import net.okur.reagobs.dto.input.UserInput;
 import net.okur.reagobs.dto.output.UserOutput;
 import net.okur.reagobs.dto.response.GenericResponse;
 import net.okur.reagobs.entity.User;
@@ -8,7 +9,6 @@ import net.okur.reagobs.error.ApiError;
 import net.okur.reagobs.error.exception.ActivationNotificationException;
 import net.okur.reagobs.service.TranslateService;
 import net.okur.reagobs.service.UserService;
-import net.okur.reagobs.dto.input.UserInput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -35,9 +35,8 @@ public class UserController {
   @PostMapping("/api/v1/users/")
   public GenericResponse createUser(@Valid @RequestBody UserInput userInput) {
 
-    UserOutput userOutput = userService.createUser(userInput);
-    String translateMessage =
-        translateService.getMessageWithArgs("reago.user.create.success.message", userOutput.username());
+    userService.createUser(userInput);
+    String translateMessage = TranslateService.getMessage("reago.user.create.success.message");
     return new GenericResponse(translateMessage);
   }
 
@@ -57,7 +56,7 @@ public class UserController {
   @DeleteMapping("/api/v1/users/{id}")
   public GenericResponse deleteUser(@PathVariable("id") Long id) {
     userService.deleteUser(id);
-    return new GenericResponse(TranslateService.getMessageStatic("reago.user.delete.success.message"));
+    return new GenericResponse(TranslateService.getMessage("reago.user.delete.success.message"));
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -66,7 +65,7 @@ public class UserController {
 
     ApiError apiError = new ApiError();
     apiError.setPath("/api/v1/users/");
-    apiError.setMessage(TranslateService.getMessageStatic("reago.validation-error"));
+    apiError.setMessage(TranslateService.getMessage("reago.validation-error"));
     apiError.setStatus(HttpStatus.BAD_REQUEST.value());
 
     var validationErrors = exception.getBindingResult().getFieldErrors().stream().collect(
@@ -84,7 +83,7 @@ public class UserController {
 
     ApiError apiError = new ApiError();
     apiError.setPath("/api/v1/users/");
-    apiError.setMessage(TranslateService.getMessageStatic("reago.something-went-wrong"));
+    apiError.setMessage(TranslateService.getMessage("reago.something-went-wrong"));
     apiError.setStatus(HttpStatus.BAD_REQUEST.value());
 
     return ResponseEntity.badRequest().body(apiError);

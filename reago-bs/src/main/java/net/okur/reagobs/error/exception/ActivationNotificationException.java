@@ -4,6 +4,6 @@ import net.okur.reagobs.service.TranslateService;
 
 public class ActivationNotificationException extends RuntimeException {
   public ActivationNotificationException() {
-    super(TranslateService.getMessageStatic("reago.create-user-mail-failure"));
+    super(TranslateService.getMessage("reago.create-user-mail-failure"));
   }
 }

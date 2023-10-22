@@ -20,7 +20,7 @@ public class TranslateService {
     this.messageSource = messageSource;
   }
 
-  public static String getMessageStatic(String standardMessage) {
+  public static String getMessage(String standardMessage) {
     Locale locale = LocaleContextHolder.getLocale();
     try {
       return ResourceBundle.getBundle("messages", locale).getString(standardMessage);

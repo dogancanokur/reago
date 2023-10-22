@@ -2,8 +2,8 @@
     <configuration default="false" name="ReagoBsApplication" type="SpringBootApplicationConfigurationType"
                    factoryName="Spring Boot" nameIsGenerated="true">
         <envs>
-            <env name="REAGO_EMAIL_USERNAME" value="verner84@etheral.email"/>
-            <env name="REAGO_EMAIL_PASSWORD" value="n2qyMaCGnefr2DgyCf"/>
+            <env name="REAGO_EMAIL_PASSWORD" value="cnhZVNe1v7dmE6csJw"/>
+            <env name="REAGO_EMAIL_USERNAME" value="era45@ethereal.email"/>
         </envs>
         <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources"/>
         <module name="reago-bs.main"/>

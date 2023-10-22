@@ -9,8 +9,6 @@ import net.okur.reagobs.mail.EmailService;
 import net.okur.reagobs.repository.UserRepository;
 import net.okur.reagobs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.mail.MailException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -38,7 +36,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  @Transactional(value = Transactional.TxType.REQUIRED, rollbackOn = { MailException.class })
+  @Transactional(value = Transactional.TxType.REQUIRED, rollbackOn = { Exception.class })
   public UserOutput createUser(UserInput userInput) {
     try {
 
@@ -47,10 +45,10 @@ public class UserServiceImpl implements UserService {
       user.setActivationToken(String.valueOf(UUID.randomUUID()));
       user.setPassword(encodedPassword);
       user = userRepository.saveAndFlush(user);
-      emailService.sendActivationEmail(user.getEmail(), user.getActivationToken());
+      emailService.sendActivationEmail(user.getEmail(), user.getUsername(), user.getActivationToken());
       return new UserOutput(user.getId(), userInput.username(), user.getEmail(), user.getActive());
 
-    } catch (MailException mailException) {
+    } catch (Exception e) {
       throw new ActivationNotificationException();
     }
   }
