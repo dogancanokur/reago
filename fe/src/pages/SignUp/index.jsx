@@ -1,9 +1,9 @@
 import {useEffect, useMemo, useState} from "react";
-import {signUp} from "./api.js";
-import {Input} from "./components/Input.jsx";
+import {signUp} from "@/pages/SignUp/api.js";
 import {useTranslation} from "react-i18next";
-import {Alert} from "../../component/Alert.jsx";
-import {Spinner} from "../../component/Spinner.jsx";
+import {Alert} from "@/shared/component/Alert.jsx";
+import {Spinner} from "@/shared/component/Spinner.jsx";
+import {Input} from "@/pages/SignUp/components/Input.jsx";
 
 export function SignUp() {
 

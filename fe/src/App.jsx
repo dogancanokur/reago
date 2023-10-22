@@ -1,8 +1,8 @@
 import {Outlet} from "react-router-dom";
 import React from "react";
 import {useTranslation} from "react-i18next";
-import {LanguageSelector} from "./locales/LanguageSelector.jsx";
-import {NavBar} from "./component/NavBar.jsx";
+import {LanguageSelector} from "@/locales/LanguageSelector.jsx";
+import {NavBar} from "@/shared/component/NavBar.jsx";
 
 function App() {
 

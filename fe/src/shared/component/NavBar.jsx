@@ -1,5 +1,5 @@
 import {Link} from "react-router-dom";
-import reagoLogo from "../assets/reago.svg";
+import reagoLogo from "@/assets/reago.svg";
 import React from "react";
 import {useTranslation} from "react-i18next";
 

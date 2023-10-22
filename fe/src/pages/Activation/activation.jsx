@@ -2,8 +2,8 @@ import {useTranslation} from "react-i18next";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {activateUser} from "./api.js";
-import {Alert} from "../../component/Alert.jsx";
-import {Spinner} from "../../component/Spinner.jsx";
+import {Alert} from "@/shared/component/Alert.jsx";
+import {Spinner} from "@/shared/component/Spinner.jsx";
 
 export function Activation() {
     const {t} = useTranslation();

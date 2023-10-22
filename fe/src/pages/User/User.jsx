@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {useTranslation} from "react-i18next";
-import {Alert} from "../../component/Alert.jsx";
+import {Alert} from "@/shared/component/Alert.jsx";
 
 export function User() {
 
