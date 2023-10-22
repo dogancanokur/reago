@@ -15,4 +15,6 @@ public interface UserService {
   User updateUser(User user);
 
   void deleteUser(Long id);
+
+  void activateUser(String token);
 }

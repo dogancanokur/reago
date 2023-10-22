@@ -7,6 +7,7 @@ import net.okur.reagobs.dto.response.GenericResponse;
 import net.okur.reagobs.entity.User;
 import net.okur.reagobs.error.ApiError;
 import net.okur.reagobs.error.exception.ActivationNotificationException;
+import net.okur.reagobs.error.exception.InvalidTokenException;
 import net.okur.reagobs.service.TranslateService;
 import net.okur.reagobs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,14 @@ public class UserController {
     return new GenericResponse(TranslateService.getMessage("reago.user.delete.success.message"));
   }
 
+  @PatchMapping("/api/v1/users/{token}/active")
+  public GenericResponse activateUser(@PathVariable String token) {
+    userService.activateUser(token);
+    String message = TranslateService.getMessage("reago.user-activated-successfully");
+    return new GenericResponse(message);
+
+  }
+
   @ExceptionHandler(MethodArgumentNotValidException.class)
   //  @ResponseStatus(HttpStatus.BAD_REQUEST)
   private ResponseEntity<ApiError> handleMethodArgNotValidException(MethodArgumentNotValidException exception) {
@@ -96,6 +105,17 @@ public class UserController {
     apiError.setPath("/api/v1/users/");
     apiError.setMessage(exception.getMessage());
     int status = HttpStatus.BAD_GATEWAY.value();
+    apiError.setStatus(status);
+
+    return ResponseEntity.status(status).body(apiError);
+  }
+  @ExceptionHandler(InvalidTokenException.class)
+  private ResponseEntity<ApiError> handleInvalidTokenException(InvalidTokenException exception) {
+
+    ApiError apiError = new ApiError();
+    apiError.setPath("/api/v1/activation/");
+    apiError.setMessage(exception.getMessage());
+    int status = HttpStatus.BAD_REQUEST.value();
     apiError.setStatus(status);
 
     return ResponseEntity.status(status).body(apiError);
