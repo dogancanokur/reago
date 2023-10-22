@@ -1,6 +1,10 @@
 <component name="ProjectRunConfigurationManager">
     <configuration default="false" name="ReagoBsApplication" type="SpringBootApplicationConfigurationType"
                    factoryName="Spring Boot" nameIsGenerated="true">
+        <envs>
+            <env name="REAGO_EMAIL_USERNAME" value="verner84@etheral.email"/>
+            <env name="REAGO_EMAIL_PASSWORD" value="n2qyMaCGnefr2DgyCf"/>
+        </envs>
         <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources"/>
         <module name="reago-bs.main"/>
         <option name="SPRING_BOOT_MAIN_CLASS" value="net.okur.reagobs.ReagoBsApplication"/>
