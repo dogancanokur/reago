@@ -40,9 +40,14 @@ export function SignUp() {
             setSuccessMessage(response.data.message);
 
         } catch (error) {
-            if (error.response?.data && error.response.data.status === 400) {
-                const {validationError} = error.response.data;
-                setValidationErrors(validationError);
+            if (error.response?.data) {
+                if (error.response.data.validationError) {
+                    const {validationError} = error.response.data;
+                    setValidationErrors(validationError);
+
+                } else {
+                    setErrorMessage(error.response.data.message);
+                }
             } else {
                 setErrorMessage(t("genericError"));
             }
