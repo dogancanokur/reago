@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import reagoLogo from './assets/reago.svg';
 import {SignUp} from "./pages/SignUp/index.jsx";
 import './styles.scss';
+import {LanguageSelector} from "./locales/LanguageSelector.jsx";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
@@ -10,5 +11,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <img src={reagoLogo} className="logo" alt="Reago logo" height={75}/>
         </div>
         <SignUp/>
+        <LanguageSelector/>
+
     </React.StrictMode>,
 )

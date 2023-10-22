@@ -1,6 +1,7 @@
 import {useEffect, useMemo, useState} from "react";
 import {signUp} from "./api.js";
 import {Input} from "./components/Input.jsx";
+import {useTranslation} from "react-i18next";
 
 export function SignUp() {
 
@@ -13,6 +14,7 @@ export function SignUp() {
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [validationErrors, setValidationErrors] = useState({});
+    const {t} = useTranslation();
 
     // useEffects
     useEffect(() => {
@@ -24,7 +26,6 @@ export function SignUp() {
     }, [email]);
 
     useEffect(() => {
-        console.log("useEff");
         setValidationErrors(lastErrors => ({...lastErrors, password: undefined}));
     }, [password]);
 
@@ -43,7 +44,7 @@ export function SignUp() {
                 const {validationError} = error.response.data;
                 setValidationErrors(validationError);
             } else {
-                setErrorMessage(error.message);
+                setErrorMessage(t("genericError"));
             }
 
             console.warn(error);
@@ -54,10 +55,9 @@ export function SignUp() {
     }
     const passwordRepeatError = useMemo(() => {
         if (password && password !== passwordRepeat) {
-            return "Password mismatch.";
+            return t("passwordMismatch");
         }
     }, [password, passwordRepeat]);
-
 
     let isSignUpButtonDisabled = apiProgress || (!password || password !== passwordRepeat);
 
@@ -65,21 +65,21 @@ export function SignUp() {
         <div className={'container'}>
             <div className={'col-8 offset-2'}>
                 <form className={'card'} onSubmit={signUpSubmit}>
-                    <h1 className={'card-header text-center'}>Sign Up</h1>
+                    <h1 className={'card-header text-center'}>{t('sign-up')}</h1>
                     <div className={'card-body'}>
-                        <Input id={'username'} name={'username'} labelText={'Username'}
+                        <Input id={'username'} name={'username'} labelText={t('username')}
                                validationError={validationErrors?.username}
                                onChange={(event) => setUsername(event.target.value)}></Input>
 
-                        <Input id={'email'} name={'email'} labelText={'Email'}
+                        <Input id={'email'} name={'email'} labelText={t('email')}
                                validationError={validationErrors?.email}
                                onChange={(event) => setEmail(event.target.value)}></Input>
 
-                        <Input id={'password'} name={'password'} labelText={'Password'}
+                        <Input id={'password'} name={'password'} labelText={t('password')}
                                validationError={validationErrors?.password} type={'password'}
                                onChange={(event) => setPassword(event.target.value)}></Input>
 
-                        <Input id={'passwordRepeat'} name={'passwordRepeat'} labelText={'Password Repeat'}
+                        <Input id={'passwordRepeat'} name={'passwordRepeat'} labelText={t('passwordRepeat')}
                                validationError={passwordRepeatError} type={'password'}
                                onChange={(event) => setPasswordRepeat(event.target.value)}></Input>
 
@@ -88,7 +88,7 @@ export function SignUp() {
                         <div className="mb-3 text-center">
                             <button className={'btn btn-primary'} disabled={isSignUpButtonDisabled}>{
                                 apiProgress && <span className={'spinner-border spinner-border-sm'}></span>
-                            } Sign Up
+                            } {t('sign-up')}
                             </button>
                         </div>
                     </div>
