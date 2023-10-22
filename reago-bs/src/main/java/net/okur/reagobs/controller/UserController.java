@@ -1,11 +1,14 @@
 package net.okur.reagobs.controller;
 
 import jakarta.validation.Valid;
+import net.okur.reagobs.dto.output.UserOutput;
 import net.okur.reagobs.dto.response.GenericResponse;
 import net.okur.reagobs.entity.User;
 import net.okur.reagobs.error.ApiError;
 import net.okur.reagobs.service.TranslateService;
 import net.okur.reagobs.service.UserService;
+import net.okur.reagobs.dto.input.UserInput;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -28,10 +31,12 @@ public class UserController {
   }
 
   @PostMapping("/api/v1/users/")
-  public GenericResponse createUser(@Valid @RequestBody User user) {
+  public GenericResponse createUser(@Valid @RequestBody UserInput userInput) {
 
-    user = userService.createUser(user);
-    return new GenericResponse("User is created. " + user.getUsername());
+    UserOutput userOutput = userService.createUser(userInput);
+    String translateMessage =
+        translateService.getMessageWithArgs("reago.user.create.success.message", userOutput.username());
+    return new GenericResponse(translateMessage);
   }
 
   @GetMapping("/api/v1/users/")

@@ -1,5 +1,7 @@
 package net.okur.reagobs.service.impl;
 
+import net.okur.reagobs.dto.input.UserInput;
+import net.okur.reagobs.dto.output.UserOutput;
 import net.okur.reagobs.entity.User;
 import net.okur.reagobs.repository.UserRepository;
 import net.okur.reagobs.service.UserService;
@@ -9,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -28,10 +31,13 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User createUser(User user) {
+  public UserOutput createUser(UserInput userInput) {
+    User user = userInput.toUser();
     String encodedPassword = passwordEncoder.encode(user.getPassword());
+    user.setActivationToken(String.valueOf(UUID.randomUUID()));
     user.setPassword(encodedPassword);
-    return userRepository.save(user);
+    user = userRepository.save(user);
+    return new UserOutput(user.getId(), userInput.username(), user.getEmail(), user.getActive());
   }
 
   @Override
