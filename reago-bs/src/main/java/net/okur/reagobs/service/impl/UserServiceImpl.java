@@ -50,10 +50,6 @@ public class UserServiceImpl implements UserService {
       emailService.sendActivationEmail(user.getEmail(), user.getActivationToken());
       return new UserOutput(user.getId(), userInput.username(), user.getEmail(), user.getActive());
 
-    } catch (DataIntegrityViolationException exception) {
-      //todo : exception
-      throw exception;
-
     } catch (MailException mailException) {
       throw new ActivationNotificationException();
     }
