@@ -7,6 +7,7 @@ import net.okur.reagobs.entity.User;
 import net.okur.reagobs.repository.UserRepository;
 import net.okur.reagobs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -39,13 +40,19 @@ public class UserServiceImpl implements UserService {
   @Override
   @Transactional(value = Transactional.TxType.REQUIRED, rollbackOn = { MailException.class })
   public UserOutput createUser(UserInput userInput) {
-    User user = userInput.toUser();
-    String encodedPassword = passwordEncoder.encode(user.getPassword());
-    user.setActivationToken(String.valueOf(UUID.randomUUID()));
-    user.setPassword(encodedPassword);
-    user = userRepository.save(user);
-    sendActivationEmail(user);
-    return new UserOutput(user.getId(), userInput.username(), user.getEmail(), user.getActive());
+    try {
+
+      User user = userInput.toUser();
+      String encodedPassword = passwordEncoder.encode(user.getPassword());
+      user.setActivationToken(String.valueOf(UUID.randomUUID()));
+      user.setPassword(encodedPassword);
+      user = userRepository.saveAndFlush(user);
+      sendActivationEmail(user);
+      return new UserOutput(user.getId(), userInput.username(), user.getEmail(), user.getActive());
+    } catch (DataIntegrityViolationException exception) {
+      //todo : exception
+      throw exception;
+    }
   }
 
   @Override

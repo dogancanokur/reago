@@ -9,6 +9,7 @@ import net.okur.reagobs.service.TranslateService;
 import net.okur.reagobs.service.UserService;
 import net.okur.reagobs.dto.input.UserInput;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -64,7 +65,7 @@ public class UserController {
 
     ApiError apiError = new ApiError();
     apiError.setPath("/api/v1/users/");
-    apiError.setMessage("Validation Error");
+    apiError.setMessage(TranslateService.getMessage("reago.validation-error"));
     apiError.setStatus(HttpStatus.BAD_REQUEST.value());
 
     var validationErrors = exception.getBindingResult().getFieldErrors().stream().collect(
@@ -73,6 +74,17 @@ public class UserController {
             (existing, replacing) -> StringUtils.hasText(existing) ? existing + " " + replacing : replacing));
 
     apiError.setValidationError(validationErrors);
+
+    return ResponseEntity.badRequest().body(apiError);
+  }
+
+  @ExceptionHandler(DataIntegrityViolationException.class)
+  private ResponseEntity<ApiError> handleDataIntegrityViolationException(DataIntegrityViolationException exception) {
+
+    ApiError apiError = new ApiError();
+    apiError.setPath("/api/v1/users/");
+    apiError.setMessage(TranslateService.getMessage("reago.something-went-wrong"));
+    apiError.setStatus(HttpStatus.BAD_REQUEST.value());
 
     return ResponseEntity.badRequest().body(apiError);
   }
