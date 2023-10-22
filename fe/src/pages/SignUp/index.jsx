@@ -2,6 +2,8 @@ import {useEffect, useMemo, useState} from "react";
 import {signUp} from "./api.js";
 import {Input} from "./components/Input.jsx";
 import {useTranslation} from "react-i18next";
+import {Alert} from "../../component/Alert.jsx";
+import {Spinner} from "../../component/Spinner.jsx";
 
 export function SignUp() {
 
@@ -88,12 +90,11 @@ export function SignUp() {
                                validationError={passwordRepeatError} type={'password'}
                                onChange={(event) => setPasswordRepeat(event.target.value)}></Input>
 
-                        {successMessage && <div className={'alert alert-success'}>{successMessage}</div>}
-                        {errorMessage && <div className={'alert alert-danger'}>{errorMessage}</div>}
+                        {successMessage && <Alert styleType={'success'} message={successMessage}/>}
+                        {errorMessage && <Alert styleType={'danger'} message={errorMessage}/>}
                         <div className="mb-3 text-center">
                             <button className={'btn btn-primary'} disabled={isSignUpButtonDisabled}>{
-                                apiProgress && <span className={'spinner-border spinner-border-sm'}></span>
-                            } {t('sign-up')}
+                                apiProgress && <Spinner/>} {t('sign-up')}
                             </button>
                         </div>
                     </div>

@@ -2,6 +2,8 @@ import {useTranslation} from "react-i18next";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import {activateUser} from "./api.js";
+import {Alert} from "../../component/Alert.jsx";
+import {Spinner} from "../../component/Spinner.jsx";
 
 export function Activation() {
     const {t} = useTranslation();
@@ -36,9 +38,9 @@ export function Activation() {
         }
     }, []);
 
-    return (<div className={'text-center'}>
-        {apiProgress && (<span className={'spinner-border spinner-border'}></span>)}
-        {successMessage && (<div className={'alert alert-success'}>{successMessage}</div>)}
-        {errorMessage && (<div className={'alert alert-danger'}>{errorMessage}</div>)}
+    return (<div>
+        {apiProgress && (<Alert message={<Spinner big={true}/>} center={true} styleType={'success'}/>)}
+        {successMessage && (<Alert message={successMessage} styleType={'success'}/>)}
+        {errorMessage && (<Alert message={errorMessage} styleType={'danger'}/>)}
     </div>);
 }
