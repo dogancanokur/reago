@@ -1,10 +1,5 @@
-import axios from "axios";
-import {i18nInstance} from "../../locales/index.js";
+import http from "../../lib/http.js";
 
 export function activateUser(token) {
-    return axios.patch(`/api/v1/users/${token}/active`, null, {
-        headers: {
-            "Accept-Language": i18nInstance.language
-        }
-    });
+    return http.patch(`/api/v1/users/${token}/active`);
 }

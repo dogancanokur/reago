@@ -54,8 +54,6 @@ export function SignUp() {
                 setErrorMessage(t("genericError"));
             }
 
-            console.warn(error);
-
         } finally {
             setApiProgress(false);
         }
