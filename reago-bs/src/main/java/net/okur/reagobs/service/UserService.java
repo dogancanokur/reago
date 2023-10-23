@@ -1,16 +1,15 @@
 package net.okur.reagobs.service;
 
-import net.okur.reagobs.dto.output.UserOutput;
-import net.okur.reagobs.entity.User;
 import net.okur.reagobs.dto.input.UserInput;
-
-import java.util.List;
+import net.okur.reagobs.entity.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
-  List<User> getAllUser();
+  Page<User> getAllUser(Pageable pageable);
 
-  UserOutput createUser(UserInput userInput);
+  void createUser(UserInput userInput);
 
   User updateUser(User user);
 

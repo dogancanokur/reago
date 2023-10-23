@@ -2,7 +2,6 @@ package net.okur.reagobs.controller;
 
 import jakarta.validation.Valid;
 import net.okur.reagobs.dto.input.UserInput;
-import net.okur.reagobs.dto.output.UserOutput;
 import net.okur.reagobs.dto.response.GenericResponse;
 import net.okur.reagobs.entity.User;
 import net.okur.reagobs.error.ApiError;
@@ -12,6 +11,8 @@ import net.okur.reagobs.service.TranslateService;
 import net.okur.reagobs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -42,9 +43,11 @@ public class UserController {
   }
 
   @GetMapping("/api/v1/users/")
-  public ResponseEntity<?> getAllUsers() {
+  public ResponseEntity<Page<User>> getAllUsers(Pageable pageable) {
+    //(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10", name = "pageSize") int size)
 
-    return ResponseEntity.ok(userService.getAllUser());
+    Page<User> allUser = userService.getAllUser(pageable);
+    return ResponseEntity.ok(allUser);
   }
 
   @PutMapping("/api/v1/users/")
@@ -109,6 +112,7 @@ public class UserController {
 
     return ResponseEntity.status(status).body(apiError);
   }
+
   @ExceptionHandler(InvalidTokenException.class)
   private ResponseEntity<ApiError> handleInvalidTokenException(InvalidTokenException exception) {
 

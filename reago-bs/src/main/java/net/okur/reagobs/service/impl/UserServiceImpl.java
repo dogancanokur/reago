@@ -12,11 +12,12 @@ import net.okur.reagobs.mail.EmailService;
 import net.okur.reagobs.repository.UserRepository;
 import net.okur.reagobs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -34,13 +35,13 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public List<User> getAllUser() {
-    return userRepository.findAll();
+  public Page<User> getAllUser(Pageable pageable) {
+    return userRepository.findAll(pageable);
   }
 
   @Override
   @Transactional(value = Transactional.TxType.REQUIRED, rollbackOn = { Exception.class })
-  public UserOutput createUser(UserInput userInput) {
+  public void createUser(UserInput userInput) {
     try {
 
       User user = userInput.toUser();
@@ -49,7 +50,7 @@ public class UserServiceImpl implements UserService {
       user.setPassword(encodedPassword);
       user = userRepository.saveAndFlush(user);
       emailService.sendActivationEmail(user.getEmail(), user.getUsername(), user.getActivationToken());
-      return new UserOutput(user.getId(), userInput.username(), user.getEmail(), user.getActive());
+      new UserOutput(user.getId(), userInput.username(), user.getEmail(), user.getActive());
 
     } catch (Exception e) {
       throw new ActivationNotificationException();
@@ -67,9 +68,9 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public void activateUser(@Valid @NotBlank String token) throws InvalidTokenException{
+  public void activateUser(@Valid @NotBlank String token) throws InvalidTokenException {
     User byActivationToken = userRepository.findByActivationToken(token);
-    if (byActivationToken == null){
+    if (byActivationToken == null) {
       throw new InvalidTokenException();
     }
     byActivationToken.setActive(Boolean.TRUE);
