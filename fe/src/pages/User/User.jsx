@@ -44,7 +44,8 @@ export function User() {
                     <tr>
                         <th scope="col">{t('username')}</th>
                         <th scope="col">{t('email')}</th>
-                        <th scope="col">{t('isActive')}</th>
+                        <th scope="col">{t('image')}</th>
+                        <th scope="col">{t('fullName')}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -53,7 +54,8 @@ export function User() {
                             return (<tr key={index}>
                                 <th>{value.username}</th>
                                 <td>{value.email}</td>
-                                <td>{value.active ? t('active') : t('not-active')}</td>
+                                <td>{value.image}</td>
+                                <td>{value.fullName}</td>
                             </tr>)
 
                         })

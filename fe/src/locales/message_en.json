@@ -12,5 +12,7 @@
   "not-active": "Passive",
   "isActive": "Activity Status",
   "id": "ID",
-  "user-list": "User List"
+  "user-list": "User List",
+  "fullName": "Full Name",
+  "image": "Image"
 }

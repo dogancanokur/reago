@@ -1,5 +1,6 @@
 package net.okur.reagobs.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,13 @@ public class User {
   @Column(name = "email", nullable = false)
   private String email;
 
+  @Column(name = "first_name")
+  private String firstName;
+
+  @Column(name = "last_name")
+  private String lastName;
+
+  @JsonIgnore
   @Column(name = "password", nullable = false)
   private String password;
 
@@ -29,5 +37,8 @@ public class User {
 
   @Column(name = "active")
   private Boolean active = Boolean.FALSE;
+
+  @Column(name = "image")
+  private String image;
 
 }

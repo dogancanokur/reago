@@ -3,7 +3,7 @@
   "username": "Kullancı Adı",
   "password": "Şifre",
   "passwordRepeat": "Şifre Tekrarı",
-  "email": "Email",
+  "email": "E-Posta",
   "passwordMismatch": "Şifre eşleşmiyor.",
   "genericError": "Beklenmedik bir hata oluştu.",
   "homepage": "Ana Sayfa",
@@ -12,5 +12,7 @@
   "not-active": "Pasif",
   "isActive": "Aktiflik Durumu",
   "id": "ID",
-  "user-list": "Kullanıcı Listesi"
+  "user-list": "Kullanıcı Listesi",
+  "fullName": "Tam İsim",
+  "image": "Resim"
 }
