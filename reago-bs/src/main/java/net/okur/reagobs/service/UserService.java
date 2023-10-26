@@ -10,6 +10,8 @@ public interface UserService {
 
   Page<UserOutput> getAllUser(Pageable pageable);
 
+  UserOutput getByUserId(Long id);
+
   UserOutput createUser(UserInput userInput);
 
   User updateUser(User user);

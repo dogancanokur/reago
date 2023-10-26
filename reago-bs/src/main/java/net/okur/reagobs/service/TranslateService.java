@@ -6,6 +6,7 @@ import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -28,6 +29,11 @@ public class TranslateService {
     } catch (MissingResourceException exception) {
       return "??_%s_??_%s".formatted(standardMessage, locale);
     }
+  }
+
+  public static String getMessageFromLocale(String messageKey, Object... args) {
+    String message = getMessage(messageKey);
+    return MessageFormat.format(message, args);
   }
 
   public String getMessageWithArgs(String standardMessage, String... args) {

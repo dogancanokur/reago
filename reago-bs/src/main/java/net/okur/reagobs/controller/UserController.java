@@ -1,5 +1,6 @@
 package net.okur.reagobs.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import net.okur.reagobs.dto.input.UserInput;
 import net.okur.reagobs.dto.output.UserOutput;
@@ -7,6 +8,7 @@ import net.okur.reagobs.dto.response.GenericResponse;
 import net.okur.reagobs.entity.User;
 import net.okur.reagobs.error.ApiError;
 import net.okur.reagobs.error.exception.ActivationNotificationException;
+import net.okur.reagobs.error.exception.NotFoundException;
 import net.okur.reagobs.error.exception.InvalidTokenException;
 import net.okur.reagobs.service.TranslateService;
 import net.okur.reagobs.service.UserService;
@@ -48,6 +50,11 @@ public class UserController {
     //(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10", name = "pageSize") int size)
 
     return ResponseEntity.ok(userService.getAllUser(pageable));
+  }
+
+  @GetMapping("/api/v1/users/{userId}")
+  public ResponseEntity<UserOutput> getByUserUd(@PathVariable Long userId) {
+    return ResponseEntity.ok(userService.getByUserId(userId));
   }
 
   @PutMapping("/api/v1/users/")
@@ -102,10 +109,11 @@ public class UserController {
   }
 
   @ExceptionHandler(ActivationNotificationException.class)
-  private ResponseEntity<ApiError> handleActivationNotificationException(ActivationNotificationException exception) {
+  private ResponseEntity<ApiError> handleActivationNotificationException(ActivationNotificationException exception,
+      HttpServletRequest httpServletRequest) {
 
     ApiError apiError = new ApiError();
-    apiError.setPath("/api/v1/users/");
+    apiError.setPath(httpServletRequest.getRequestURI());
     apiError.setMessage(exception.getMessage());
     int status = HttpStatus.BAD_GATEWAY.value();
     apiError.setStatus(status);
@@ -114,14 +122,30 @@ public class UserController {
   }
 
   @ExceptionHandler(InvalidTokenException.class)
-  private ResponseEntity<ApiError> handleInvalidTokenException(InvalidTokenException exception) {
+  private ResponseEntity<ApiError> handleInvalidTokenException(InvalidTokenException exception,
+      HttpServletRequest httpServletRequest) {
 
     ApiError apiError = new ApiError();
-    apiError.setPath("/api/v1/activation/");
+    apiError.setPath(httpServletRequest.getRequestURI());
     apiError.setMessage(exception.getMessage());
     int status = HttpStatus.BAD_REQUEST.value();
     apiError.setStatus(status);
 
     return ResponseEntity.status(status).body(apiError);
   }
+
+  @ExceptionHandler(NotFoundException.class)
+  private ResponseEntity<ApiError> handleEntityNotFoundException(NotFoundException exception,
+      HttpServletRequest httpServletRequest) {
+
+    ApiError apiError = new ApiError();
+    apiError.setPath(httpServletRequest.getRequestURI());
+    apiError.setMessage(exception.getMessage());
+    int status = HttpStatus.BAD_REQUEST.value();
+    apiError.setStatus(status);
+
+    return ResponseEntity.status(status).body(apiError);
+
+  }
+
 }

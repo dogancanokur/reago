@@ -6,3 +6,7 @@ export function loadUsers(page = 0, size = 10) {
     };
     return http.get("/api/v1/users/", config);
 }
+
+export function getUser(userId) {
+    return http.get(`/api/v1/users/${userId}`);
+}

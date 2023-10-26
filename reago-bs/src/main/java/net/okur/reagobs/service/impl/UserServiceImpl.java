@@ -8,6 +8,7 @@ import net.okur.reagobs.dto.output.UserOutput;
 import net.okur.reagobs.entity.User;
 import net.okur.reagobs.error.exception.ActivationNotificationException;
 import net.okur.reagobs.error.exception.InvalidTokenException;
+import net.okur.reagobs.error.exception.NotFoundException;
 import net.okur.reagobs.mail.EmailService;
 import net.okur.reagobs.repository.UserRepository;
 import net.okur.reagobs.service.UserService;
@@ -37,6 +38,11 @@ public class UserServiceImpl implements UserService {
   @Override
   public Page<UserOutput> getAllUser(Pageable pageable) {
     return userRepository.findAll(pageable).map(UserOutput::new);
+  }
+
+  @Override
+  public UserOutput getByUserId(Long id) {
+    return new UserOutput(userRepository.findById(id).orElseThrow(() -> new NotFoundException(id)));
   }
 
   @Override

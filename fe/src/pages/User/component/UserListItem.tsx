@@ -1,6 +1,7 @@
 // eslint-disable-next-line no-unused-vars
-import React, {useState} from "react";
+import React from "react";
 import defaultProfileImage from "@/assets/profile.png";
+import {useNavigate} from "react-router-dom";
 
 export interface User {
     id: number,
@@ -15,13 +16,19 @@ interface UserListItemProps {
 }
 
 export function UserListItem({user}: UserListItemProps) {
+
     let spreadElements = {};
-    const [selected, setSelected] = useState(false);
-    if (selected) {
-        spreadElements = {/*'backgroundColor': '#ff8b8b',*/ 'cursor': 'pointer'};
-    }
+    // const [selected, setSelected] = useState(false);
+    // if (selected) {
+    //     spreadElements = {/*'backgroundColor': '#ff8b8b',*/ 'cursor': 'pointer'};
+    // }
+    const navigate = useNavigate();
+    // note : tablo degilde baska bisi olsa idi <Link> ile yapacaktim.
     return (
-        <tr className={selected ? 'table-primary' : ''} onClick={() => setSelected(!selected)}>
+        <tr /*className={selected ? 'table-primary' : ''}*/ onClick={() => {
+            // setSelected(!selected)
+            navigate("/user/" + user.id);
+        }} style={{'cursor': 'pointer'}}>
             <th style={{...spreadElements}}>
                 <img src={defaultProfileImage} alt={'profile'} width={24}
                      className={'img-fluid rounded-circle shadow-sm me-2'}/>
