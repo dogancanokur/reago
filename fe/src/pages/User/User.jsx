@@ -3,6 +3,7 @@ import {useTranslation} from "react-i18next";
 import {Alert} from "@/shared/component/Alert.jsx";
 import {loadUsers} from "@/pages/User/api.js";
 import {Spinner} from "@/shared/component/Spinner.jsx";
+import {UserListItem} from "@/pages/User/component/UserListItem.tsx";
 
 export function User() {
 
@@ -50,14 +51,8 @@ export function User() {
                     </thead>
                     <tbody>
                     {
-                        userPage.content.map((value, index) => {
-                            return (<tr key={index}>
-                                <th>{value.username}</th>
-                                <td>{value.email}</td>
-                                <td>{value.image}</td>
-                                <td>{value.fullName}</td>
-                            </tr>)
-
+                        userPage.content.map((user, index) => {
+                            return <UserListItem user={user} key={index}/>
                         })
                     }
                     </tbody>
