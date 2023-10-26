@@ -1,5 +1,6 @@
 // eslint-disable-next-line no-unused-vars
-import React from "react";
+import React, {useState} from "react";
+import defaultProfileImage from "@/assets/profile.png";
 
 export interface User {
     id: number,
@@ -14,13 +15,21 @@ interface UserListItemProps {
 }
 
 export function UserListItem({user}: UserListItemProps) {
+    let spreadElements = {};
+    const [selected, setSelected] = useState(false);
+    if (selected) {
+        spreadElements = {/*'backgroundColor': '#ff8b8b',*/ 'cursor': 'pointer'};
+    }
     return (
-        <tr>
-            <th>{user.username}</th>
-            <td>{user.email}</td>
-            <td>{user.image}</td>
-            <td>{user.fullName}</td>
-            <td>{user.fullName}</td>
+        <tr className={selected ? 'table-primary' : ''} onClick={() => setSelected(!selected)}>
+            <th style={{...spreadElements}}>
+                <img src={defaultProfileImage} alt={'profile'} width={24}
+                     className={'img-fluid rounded-circle shadow-sm me-2'}/>
+                {user.username}
+            </th>
+            <td style={{...spreadElements}}>{user.email}</td>
+            <td style={{...spreadElements}}>{user.fullName}</td>
+            <td style={{...spreadElements}}>{user.fullName}</td>
         </tr>
     );
 }

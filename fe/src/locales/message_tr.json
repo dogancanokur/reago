@@ -14,5 +14,7 @@
   "id": "ID",
   "user-list": "Kullanıcı Listesi",
   "fullName": "Tam İsim",
-  "image": "Resim"
+  "image": "Resim",
+  "previous": "Önceki Sayfa",
+  "next": "Sonraki Sayfa"
 }

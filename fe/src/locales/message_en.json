@@ -14,5 +14,7 @@
   "id": "ID",
   "user-list": "User List",
   "fullName": "Full Name",
-  "image": "Image"
+  "image": "Image",
+  "previous": "Previous Page",
+  "next": "Next Page"
 }

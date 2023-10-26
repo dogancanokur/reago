@@ -5,7 +5,7 @@ import {loadUsers} from "@/pages/User/api.js";
 import {Spinner} from "@/shared/component/Spinner.jsx";
 import {UserListItem} from "@/pages/User/component/UserListItem.tsx";
 
-export function User() {
+export function UserListPage() {
 
     const {t} = useTranslation();
 
@@ -38,7 +38,8 @@ export function User() {
     return (
         <div className={'card'}>
             <div className={'card-header text-center fw-bold fs-4'}>{t('user-list')}</div>
-            {errorMessage && (<div className={'m-2'}><Alert message={errorMessage} styleType={'danger'} center={true}/></div>)}
+            {errorMessage && (
+                <div className={'m-2'}><Alert message={errorMessage} styleType={'danger'} center={true}/></div>)}
             <div className={'card-body'}>
                 <table className="table">
                     <thead>
@@ -51,8 +52,8 @@ export function User() {
                     </thead>
                     <tbody>
                     {
-                        userPage.content.map((user, index) => {
-                            return <UserListItem user={user} key={index}/>
+                        userPage.content.map((user) => {
+                            return <UserListItem user={user} key={user.id}/>
                         })
                     }
                     </tbody>
