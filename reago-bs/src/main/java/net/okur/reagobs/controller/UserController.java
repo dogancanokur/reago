@@ -2,6 +2,7 @@ package net.okur.reagobs.controller;
 
 import jakarta.validation.Valid;
 import net.okur.reagobs.dto.input.UserInput;
+import net.okur.reagobs.dto.output.UserOutput;
 import net.okur.reagobs.dto.response.GenericResponse;
 import net.okur.reagobs.entity.User;
 import net.okur.reagobs.error.ApiError;
@@ -43,11 +44,10 @@ public class UserController {
   }
 
   @GetMapping("/api/v1/users/")
-  public ResponseEntity<Page<User>> getAllUsers(Pageable pageable) {
+  public ResponseEntity<Page<UserOutput>> getAllUsers(Pageable pageable) {
     //(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10", name = "pageSize") int size)
 
-    Page<User> allUser = userService.getAllUser(pageable);
-    return ResponseEntity.ok(allUser);
+    return ResponseEntity.ok(userService.getAllUser(pageable));
   }
 
   @PutMapping("/api/v1/users/")

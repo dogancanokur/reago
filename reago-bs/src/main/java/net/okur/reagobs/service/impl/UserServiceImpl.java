@@ -35,13 +35,13 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Page<User> getAllUser(Pageable pageable) {
-    return userRepository.findAll(pageable);
+  public Page<UserOutput> getAllUser(Pageable pageable) {
+    return userRepository.findAll(pageable).map(UserOutput::new);
   }
 
   @Override
   @Transactional(value = Transactional.TxType.REQUIRED, rollbackOn = { Exception.class })
-  public void createUser(UserInput userInput) {
+  public UserOutput createUser(UserInput userInput) {
     try {
 
       User user = userInput.toUser();
@@ -50,7 +50,8 @@ public class UserServiceImpl implements UserService {
       user.setPassword(encodedPassword);
       user = userRepository.saveAndFlush(user);
       emailService.sendActivationEmail(user.getEmail(), user.getUsername(), user.getActivationToken());
-      new UserOutput(user.getId(), userInput.username(), user.getEmail(), user.getActive());
+
+      return new UserOutput(user);
 
     } catch (Exception e) {
       throw new ActivationNotificationException();
