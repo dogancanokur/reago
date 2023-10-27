@@ -15,10 +15,13 @@ export class UserPageClassComponent extends Component {
     }
 
     async componentDidMount() {
+        await this.loadUser();
+    }
+
+    loadUser = async () => {
         this.setState({apiProgress: true});
         try {
             const response = await getUser(this.props.userId);
-            console.table(response.data);
             this.setState({user: response.data});
         } catch (err) {
             if (err.response.status === 400) {
@@ -28,6 +31,12 @@ export class UserPageClassComponent extends Component {
             }
         } finally {
             this.setState({apiProgress: false});
+        }
+    };
+
+    async componentDidUpdate(prevProps, prevState, snapshot) {
+        if (this.props.userId !== prevProps.userId) {
+            await this.loadUser();
         }
     }
 

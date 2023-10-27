@@ -1,16 +1,16 @@
-import {Outlet} from "react-router-dom";
+import {Link, Outlet} from "react-router-dom";
 import React from "react";
-import {useTranslation} from "react-i18next";
 import {LanguageSelector} from "@/locales/LanguageSelector.jsx";
 import {NavBar} from "@/shared/component/NavBar.jsx";
 
 function App() {
 
-    const {t} = useTranslation();
     return (
         <>
             <NavBar/>
             <div className="container my-3">
+                <div><Link to={'userTest/1'}>asdf</Link></div>
+                <div><Link to={'userTest/2'}>asdf</Link></div>
                 <Outlet/>
                 <LanguageSelector/>
             </div>
