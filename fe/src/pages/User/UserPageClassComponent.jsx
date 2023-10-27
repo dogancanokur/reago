@@ -5,6 +5,7 @@ import {getUser} from "@/pages/User/api.js";
 import defaultImage from "@/assets/profile.png"
 import {Alert} from "@/shared/component/Alert.jsx";
 import {Spinner} from "@/shared/component/Spinner.jsx";
+import {withTranslation} from "react-i18next";
 
 export class UserPageClassComponent extends Component {
 
@@ -21,9 +22,9 @@ export class UserPageClassComponent extends Component {
             this.setState({user: response.data});
         } catch (err) {
             if (err.response.status === 400) {
-                this.setState({user: undefined, errorMessage: err.response.data.message});
+                this.setState({user: undefined, errorMessage: this.props.t('userNotFoundError')});
             } else {
-                this.setState({user: undefined, errorMessage: err.message});
+                this.setState({user: undefined, errorMessage: this.props.t('userNotFoundError')});
             }
         } finally {
             this.setState({apiProgress: false});
@@ -53,7 +54,10 @@ export class UserPageClassComponent extends Component {
     }
 }
 
+const UserPageClassComponentTranslation = withTranslation()(UserPageClassComponent);
+
+// withRouter react router 6 ile kalkti
 export function ForUserClassComponent() {
     const {userId} = useParams();
-    return <UserPageClassComponent userId={userId}/>;
+    return <UserPageClassComponentTranslation userId={userId}/>;
 }

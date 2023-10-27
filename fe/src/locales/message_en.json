@@ -6,6 +6,7 @@
   "email": "Email",
   "passwordMismatch": "Password Mismatch",
   "genericError": "An unexpected error occurred.",
+  "userNotFoundError": "User not found.",
   "homepage": "Home Page",
   "already activated": "Already Activated.",
   "active": "Active",

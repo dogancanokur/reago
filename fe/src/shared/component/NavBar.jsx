@@ -19,7 +19,7 @@ export function NavBar() {
                         <Link className={'nav-link'} to={'/users'}>{t('user-list')}</Link>
                     </li>
                     <li className={'nav-item'}>
-                        <Link className={'nav-link'} to={'/signup'}>{t('Sign Up')}</Link>
+                        <Link className={'nav-link'} to={'/signup'}>{t('sign-up')}</Link>
                     </li>
                 </ul>
             </div>
