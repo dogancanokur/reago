@@ -16,7 +16,7 @@ export function NavBar() {
                 </Link>
                 <ul className={'navbar-nav'}>
                     <li className={'nav-item'}>
-                        <Link className={'nav-link'} to={'/users'}>{t('user-list')}</Link>
+                        <Link className={'nav-link'} reloadDocument to={'/users'}>{t('user-list')}</Link>
                     </li>
                     <li className={'nav-item'}>
                         <Link className={'nav-link'} to={'/signup'}>{t('sign-up')}</Link>

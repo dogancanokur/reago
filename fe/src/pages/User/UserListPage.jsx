@@ -35,6 +35,12 @@ export function UserListPage() {
         getUsers();
     }, []);
 
+    // useEffect(() => {
+    //     return () => {
+    //         console.log("component is unmounted example");
+    //     };
+    // }, []);
+
     return (
         <div className={'card'}>
             <div className={'card-header text-center fw-bold fs-4'}>{t('user-list')}</div>
