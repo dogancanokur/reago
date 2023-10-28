@@ -1,49 +1,26 @@
 // eslint-disable-next-line no-unused-vars
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {getUser} from "@/pages/User/api.js";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 
 import defaultImage from "@/assets/profile.png";
 import {Alert} from "@/shared/component/Alert.jsx";
+import {useRouteParamApiRequest} from "@/shared/hooks/useRouteParamApiRequest.js";
+import {Spinner} from "@/shared/component/Spinner.jsx";
 
 export function UserPage() {
 
     const {t} = useTranslation();
-    const [errorMessage, setErrorMessage] = useState();
-    const [user, setUser] = useState();
-    const {userId} = useParams();
 
-
-    useEffect(() => {
-        const timeout = setTimeout(() => {
-            async function callUser() {
-
-                try {
-                    const response = await getUser(userId);
-                    setUser(response.data);
-                } catch (err) {
-                    setUser(undefined);
-                    if (err.response.status === 400) {
-                        setErrorMessage(err.response.data.message);
-                    } else {
-                        setErrorMessage(t("genericError"));
-                    }
-                }
-            }
-
-            callUser();
-
-        }, 0);
-
-        return () => {
-            clearTimeout(timeout);
-        }
-    }, []);
+    const {apiProgress, data: user, error: errorMessage} = useRouteParamApiRequest("userId", getUser);
 
     let page = "";
     let navigate = useNavigate();
 
+    if (apiProgress) {
+        return (<Alert message={<Spinner big={true}/>} center={true} styleType={'warning'}/>);
+    }
     if (user) {
         page = (<div className="card" style={{'width': '100%'}}>
             <img src={defaultImage} className="mx-auto" alt="profile" height={100} width={100}/>
