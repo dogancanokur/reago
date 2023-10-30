@@ -19,4 +19,6 @@ public interface UserService {
   void deleteUser(Long id);
 
   void activateUser(String token);
+
+  User findByEmail(String email);
 }

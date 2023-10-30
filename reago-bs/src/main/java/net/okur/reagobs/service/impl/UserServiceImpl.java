@@ -85,4 +85,9 @@ public class UserServiceImpl implements UserService {
     userRepository.save(byActivationToken);
   }
 
+  @Override
+  public User findByEmail(String email) {
+    return userRepository.findByEmail(email);
+  }
+
 }

@@ -1,9 +1,10 @@
 import {useEffect, useMemo, useState} from "react";
-import {signUp} from "@/pages/SignUp/api.js";
+import {signUp} from "@/pages/SignUpLogin/api.js";
 import {useTranslation} from "react-i18next";
 import {Alert} from "@/shared/component/Alert.jsx";
 import {Spinner} from "@/shared/component/Spinner.jsx";
-import {Input} from "@/pages/SignUp/components/Input.jsx";
+import {Input} from "@/shared/component/Input.jsx";
+import {Button} from "@/shared/component/Button.jsx";
 
 export function SignUp() {
 
@@ -66,6 +67,7 @@ export function SignUp() {
 
     let isSignUpButtonDisabled = apiProgress || (!password || password !== passwordRepeat);
 
+    let buttonText = <>{apiProgress && <Spinner/>} {t('sign-up')}</>;
     return (
         <div className={'container'}>
             <div className={'col-8 offset-2'}>
@@ -91,9 +93,9 @@ export function SignUp() {
                         {successMessage && <Alert styleType={'success'} message={successMessage}/>}
                         {errorMessage && <Alert styleType={'danger'} message={errorMessage}/>}
                         <div className="mb-3 text-center">
-                            <button className={'btn btn-primary'} disabled={isSignUpButtonDisabled}>{
-                                apiProgress && <Spinner/>} {t('sign-up')}
-                            </button>
+                            <Button disabled={isSignUpButtonDisabled} type={'submit'}
+                                    className={'btn-primary'} text={t('submit')}
+                                    apiProgress={apiProgress}/>
                         </div>
                     </div>
                 </form>

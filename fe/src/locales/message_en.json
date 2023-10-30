@@ -17,5 +17,6 @@
   "fullName": "Full Name",
   "image": "Image",
   "previous": "Previous Page",
-  "next": "Next Page"
+  "next": "Next Page",
+  "login": "Login"
 }

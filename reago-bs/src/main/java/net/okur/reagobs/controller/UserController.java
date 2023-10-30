@@ -8,8 +8,8 @@ import net.okur.reagobs.dto.response.GenericResponse;
 import net.okur.reagobs.entity.User;
 import net.okur.reagobs.error.ApiError;
 import net.okur.reagobs.error.exception.ActivationNotificationException;
-import net.okur.reagobs.error.exception.NotFoundException;
 import net.okur.reagobs.error.exception.InvalidTokenException;
+import net.okur.reagobs.error.exception.NotFoundException;
 import net.okur.reagobs.service.TranslateService;
 import net.okur.reagobs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.stream.Collectors;
 
 @RestController
 public class UserController {
@@ -77,75 +72,4 @@ public class UserController {
     return new GenericResponse(message);
 
   }
-
-  @ExceptionHandler(MethodArgumentNotValidException.class)
-  //  @ResponseStatus(HttpStatus.BAD_REQUEST)
-  private ResponseEntity<ApiError> handleMethodArgNotValidException(MethodArgumentNotValidException exception) {
-
-    ApiError apiError = new ApiError();
-    apiError.setPath("/api/v1/users/");
-    apiError.setMessage(TranslateService.getMessage("reago.validation-error"));
-    apiError.setStatus(HttpStatus.BAD_REQUEST.value());
-
-    var validationErrors = exception.getBindingResult().getFieldErrors().stream().collect(
-        Collectors.toMap(FieldError::getField,
-            fieldError -> StringUtils.hasText(fieldError.getDefaultMessage()) ? fieldError.getDefaultMessage() : "",
-            (existing, replacing) -> StringUtils.hasText(existing) ? existing + " " + replacing : replacing));
-
-    apiError.setValidationError(validationErrors);
-
-    return ResponseEntity.badRequest().body(apiError);
-  }
-
-  @ExceptionHandler(DataIntegrityViolationException.class)
-  private ResponseEntity<ApiError> handleDataIntegrityViolationException(DataIntegrityViolationException exception) {
-
-    ApiError apiError = new ApiError();
-    apiError.setPath("/api/v1/users/");
-    apiError.setMessage(TranslateService.getMessage("reago.something-went-wrong"));
-    apiError.setStatus(HttpStatus.BAD_REQUEST.value());
-
-    return ResponseEntity.badRequest().body(apiError);
-  }
-
-  @ExceptionHandler(ActivationNotificationException.class)
-  private ResponseEntity<ApiError> handleActivationNotificationException(ActivationNotificationException exception,
-      HttpServletRequest httpServletRequest) {
-
-    ApiError apiError = new ApiError();
-    apiError.setPath(httpServletRequest.getRequestURI());
-    apiError.setMessage(exception.getMessage());
-    int status = HttpStatus.BAD_GATEWAY.value();
-    apiError.setStatus(status);
-
-    return ResponseEntity.status(status).body(apiError);
-  }
-
-  @ExceptionHandler(InvalidTokenException.class)
-  private ResponseEntity<ApiError> handleInvalidTokenException(InvalidTokenException exception,
-      HttpServletRequest httpServletRequest) {
-
-    ApiError apiError = new ApiError();
-    apiError.setPath(httpServletRequest.getRequestURI());
-    apiError.setMessage(exception.getMessage());
-    int status = HttpStatus.BAD_REQUEST.value();
-    apiError.setStatus(status);
-
-    return ResponseEntity.status(status).body(apiError);
-  }
-
-  @ExceptionHandler(NotFoundException.class)
-  private ResponseEntity<ApiError> handleEntityNotFoundException(NotFoundException exception,
-      HttpServletRequest httpServletRequest) {
-
-    ApiError apiError = new ApiError();
-    apiError.setPath(httpServletRequest.getRequestURI());
-    apiError.setMessage(exception.getMessage());
-    int status = HttpStatus.BAD_REQUEST.value();
-    apiError.setStatus(status);
-
-    return ResponseEntity.status(status).body(apiError);
-
-  }
-
 }

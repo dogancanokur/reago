@@ -31,6 +31,8 @@ public class ReagoBsApplication {
         user.setEmail("user_" + i + "@reago.com");
         user.setPassword(passwordEncoder.encode("P4ssw0rd"));
         user.setActive(Boolean.TRUE);
+        user.setFirstName("User" + i);
+        user.setLastName("Reago");
         userRepository.save(user);
       }
     };
