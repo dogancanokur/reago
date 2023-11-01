@@ -2,7 +2,6 @@ package net.okur.reagobs;
 
 import net.okur.reagobs.entity.User;
 import net.okur.reagobs.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,7 +27,7 @@ public class ReagoBsApplication {
       for (var i = 1; i <= 500; i++) {
         User user = new User();
         user.setUsername("user_" + i);
-        user.setEmail("user_" + i + "@reago.com");
+        user.setEmail("user" + i + "@reago.com");
         user.setPassword(passwordEncoder.encode("P4ssw0rd"));
         user.setActive(Boolean.TRUE);
         user.setFirstName("User" + i);

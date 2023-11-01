@@ -18,5 +18,8 @@
   "image": "Resim",
   "previous": "Önceki Sayfa",
   "next": "Sonraki Sayfa",
-  "login": "Giriş Yap"
+  "login": "Giriş Yap",
+  "logout": "Çıkış Yap",
+  "edit": "Düzenle",
+  "go-back": "Geri Dön"
 }

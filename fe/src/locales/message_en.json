@@ -18,5 +18,8 @@
   "image": "Image",
   "previous": "Previous Page",
   "next": "Next Page",
-  "login": "Login"
+  "login": "Login",
+  "logout": "Logout",
+  "edit": "Edit",
+  "go-back": "Go Back"
 }
