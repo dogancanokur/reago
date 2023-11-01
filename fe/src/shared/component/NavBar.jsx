@@ -1,13 +1,13 @@
 import {Link} from "react-router-dom";
 import reagoLogo from "@/assets/reago.svg";
-import {useContext} from "react";
 import {useTranslation} from "react-i18next";
-import {AuthContext} from "@/shared/state/context.jsx";
+import {useAuthDispatch, useAuthState} from "@/shared/state/context.jsx";
 
 export function NavBar() {
 
     const {t} = useTranslation();
-    const authState = useContext(AuthContext);
+    const authState = useAuthState();
+    const authDispatch = useAuthDispatch();
 
     return (
         <nav className="navbar navbar-expand bg-body-tertiary shadow-sm">
@@ -38,7 +38,7 @@ export function NavBar() {
                             <li className={'nav-item'}>
                                 <Link className={'nav-link'} to={'/'}
                                       onClick={() => {
-                                          authState.dispatch({type: 'logoutSuccess'})
+                                          authDispatch({type: 'logoutSuccess'})
                                       }}>{t('logout')}</Link>
                             </li>
                         </>
