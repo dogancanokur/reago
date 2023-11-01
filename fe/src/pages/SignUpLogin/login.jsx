@@ -15,7 +15,7 @@ export function Login() {
     const [errorMessage, setErrorMessage] = useState();
     const [validationErrors, setValidationErrors] = useState({});
     const {t} = useTranslation();
-    const authState = useContext(AuthContext);
+    const authContext = useContext(AuthContext);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -38,7 +38,7 @@ export function Login() {
             };
             let response = await login(body);
             const {token, userOutput} = response.data;
-            authState.onLoginSuccess(userOutput);
+            authContext.dispatch({type: 'loginSuccess', data: userOutput});
             navigate("/");
             console.log(token);
 

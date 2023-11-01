@@ -37,7 +37,9 @@ export function NavBar() {
                             </li>
                             <li className={'nav-item'}>
                                 <Link className={'nav-link'} to={'/'}
-                                      onClick={authState.onLogoutSuccess}>{t('logout')}</Link>
+                                      onClick={() => {
+                                          authState.dispatch({type: 'logoutSuccess'})
+                                      }}>{t('logout')}</Link>
                             </li>
                         </>
                     }
