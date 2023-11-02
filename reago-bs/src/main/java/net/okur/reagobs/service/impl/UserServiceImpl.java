@@ -36,8 +36,11 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Page<UserOutput> getAllUser(Pageable pageable) {
-    return userRepository.findAll(pageable).map(UserOutput::new);
+  public Page<UserOutput> getAllUser(Pageable pageable, User loggedInUser) {
+    if (loggedInUser == null) {
+      return userRepository.findAll(pageable).map(UserOutput::new);
+    }
+    return userRepository.findByIdNot(loggedInUser.getId(), pageable).map(UserOutput::new);
   }
 
   @Override

@@ -8,7 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
-  Page<UserOutput> getAllUser(Pageable pageable);
+  Page<UserOutput> getAllUser(Pageable pageable, User loggedInUser);
 
   UserOutput getByUserId(Long id);
 

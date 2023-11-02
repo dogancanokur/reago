@@ -1,5 +1,6 @@
 import {createContext, useContext, useEffect, useReducer} from "react";
 import {loadAuthState, storeAuthState} from "@/state/storage.js";
+import {setToken} from "@/lib/http.js";
 
 export const AuthContext = createContext();
 export const AuthDispatchContext = createContext();
@@ -16,9 +17,11 @@ export function useAuthDispatch() {
 const authReducer = (authState, action) => {
     switch (action.type) {
         case 'loginSuccess': {
-            return action.data;
+            setToken(action.data.token)
+            return action.data.user;
         }
         case 'logoutSuccess': {
+            setToken(null);
             return {id: 0};
         }
         default:

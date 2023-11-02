@@ -38,7 +38,7 @@ export function Login() {
             };
             let response = await login(body);
             const {token, userOutput} = response.data;
-            authDispatch({type: 'loginSuccess', data: userOutput});
+            authDispatch({type: 'loginSuccess', data: {token, user: userOutput}});
             navigate("/");
             console.log(token);
 

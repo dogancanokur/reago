@@ -12,3 +12,24 @@ export function loadAuthState() {
         return defaultState;
     }
 }
+
+export function storeToken(token) {
+    if (token) {
+        localStorage.setItem('token', JSON.stringify(token));
+    } else {
+        localStorage.removeItem('token');
+    }
+}
+
+export function loadToken() {
+    try {
+        const tokenInString = JSON.parse(localStorage.getItem('token'));
+        if (!tokenInString) {
+            return null;
+        }
+        return tokenInString
+    } catch (err) {
+        return null;
+    }
+
+}

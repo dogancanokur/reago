@@ -1,22 +1,17 @@
 package net.okur.reagobs.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import net.okur.reagobs.dto.input.UserInput;
 import net.okur.reagobs.dto.output.UserOutput;
 import net.okur.reagobs.dto.response.GenericResponse;
 import net.okur.reagobs.entity.User;
-import net.okur.reagobs.error.ApiError;
-import net.okur.reagobs.error.exception.ActivationNotificationException;
-import net.okur.reagobs.error.exception.InvalidTokenException;
-import net.okur.reagobs.error.exception.NotFoundException;
 import net.okur.reagobs.service.TranslateService;
 import net.okur.reagobs.service.UserService;
+import net.okur.reagobs.token.BasicAuthTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,11 +20,14 @@ public class UserController {
 
   private final UserService userService;
   private final TranslateService translateService;
+  private final BasicAuthTokenService tokenService;
 
   @Autowired
-  public UserController(UserService userService, TranslateService translateService) {
+  public UserController(UserService userService, TranslateService translateService,
+      @Qualifier("basicAuthTokenService") BasicAuthTokenService tokenService) {
     this.userService = userService;
     this.translateService = translateService;
+    this.tokenService = tokenService;
   }
 
   @PostMapping("/api/v1/users/")
@@ -41,19 +39,23 @@ public class UserController {
   }
 
   @GetMapping("/api/v1/users/")
-  public ResponseEntity<Page<UserOutput>> getAllUsers(Pageable pageable) {
-    //(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10", name = "pageSize") int size)
+  public ResponseEntity<Page<UserOutput>> getAllUsers(Pageable pageable,
+      //(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10", name = "pageSize") int size)
+      @RequestHeader(name = "Authorization", required = false) String authorizationHeader) {
 
-    return ResponseEntity.ok(userService.getAllUser(pageable));
+    var loggedInUser = tokenService.verifyToken(authorizationHeader);
+
+    return ResponseEntity.ok(userService.getAllUser(pageable, loggedInUser));
   }
 
   @GetMapping("/api/v1/users/{userId}")
-  public ResponseEntity<UserOutput> getByUserUd(@PathVariable Long userId) {
+  public ResponseEntity<UserOutput> getByUserId(@PathVariable Long userId) {
     return ResponseEntity.ok(userService.getByUserId(userId));
   }
 
   @PutMapping("/api/v1/users/")
   public GenericResponse updateUser(@RequestBody User user) {
+
     userService.updateUser(user);
     return new GenericResponse(
         translateService.getMessageWithArgs("reago.user.update.success.message", user.getUsername()));

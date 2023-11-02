@@ -18,7 +18,7 @@ export function NavBar() {
                 </Link>
                 <ul className={'navbar-nav'}>
                     <li className={'nav-item'}>
-                        <Link className={'nav-link'} reloadDocument to={'/users'}>{t('user-list')}</Link>
+                        <Link className={'nav-link'} to={'/users'}>{t('user-list')}</Link>
                     </li>
                     {authState.id === 0 &&
                         <>
@@ -33,7 +33,7 @@ export function NavBar() {
                     {authState.id !== 0 &&
                         <>
                             <li className={'nav-item'}>
-                                <Link className={'nav-link'} to={'/'}>@{authState.username}</Link>
+                                <Link className={'nav-link'} to={'/user/:userId'}>@{authState.username}</Link>
                             </li>
                             <li className={'nav-item'}>
                                 <Link className={'nav-link'} to={'/'}
