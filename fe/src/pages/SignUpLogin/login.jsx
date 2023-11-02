@@ -4,10 +4,8 @@ import {useEffect, useState} from "react";
 import {login} from "@/pages/SignUpLogin/api.js";
 import {Alert} from "@/shared/component/Alert.jsx";
 import {Button} from "@/shared/component/Button.jsx";
-// import {useAuthDispatch} from "@/shared/state/context.jsx";
+import {useAuthDispatch} from "@/shared/state/context.jsx";
 import {useNavigate} from "react-router-dom";
-import {useDispatch} from "react-redux";
-import {loginSuccess} from "@/state/redux.js";
 
 export function Login() {
 
@@ -17,8 +15,7 @@ export function Login() {
     const [errorMessage, setErrorMessage] = useState();
     const [validationErrors, setValidationErrors] = useState({});
     const {t} = useTranslation();
-    const authDispatch = useDispatch();
-    // const authDispatch = useAuthDispatch();
+    const authDispatch = useAuthDispatch();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -41,8 +38,7 @@ export function Login() {
             };
             let response = await login(body);
             const {token, userOutput} = response.data;
-            // authDispatch({type: 'loginSuccess', data: userOutput});
-            authDispatch(loginSuccess(userOutput));
+            authDispatch({type: 'loginSuccess', data: userOutput});
             navigate("/");
             console.log(token);
 
