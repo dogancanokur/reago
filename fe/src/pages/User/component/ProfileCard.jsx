@@ -1,11 +1,12 @@
 import defaultImage from "@/assets/profile.png";
 import {useTranslation} from "react-i18next";
 import {Link, useNavigate} from "react-router-dom";
-import {useAuthState} from "@/shared/state/context.jsx";
+import {useSelector} from "react-redux";
 
 export function ProfileCard({user}) {
 
-    const authState = useAuthState();
+    const authState = useSelector((store) => store.auth);
+    // const authState = useAuthState();
 
     let navigate = useNavigate();
     const {t} = useTranslation();

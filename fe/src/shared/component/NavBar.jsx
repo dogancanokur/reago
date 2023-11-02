@@ -1,13 +1,18 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import reagoLogo from "@/assets/reago.svg";
 import {useTranslation} from "react-i18next";
-import {useAuthDispatch, useAuthState} from "@/shared/state/context.jsx";
+import {useDispatch, useSelector} from "react-redux";
+import {logoutSuccess} from "@/state/redux.js";
 
 export function NavBar() {
 
     const {t} = useTranslation();
-    const authState = useAuthState();
-    const authDispatch = useAuthDispatch();
+    const authState = useSelector((store) => store.auth);
+    const authDispatch = useDispatch();
+    // const authState = useAuthState();
+    // const authDispatch = useAuthDispatch();
+    const navigate = useNavigate();
+
 
     return (
         <nav className="navbar navbar-expand bg-body-tertiary shadow-sm">
@@ -38,7 +43,7 @@ export function NavBar() {
                             <li className={'nav-item'}>
                                 <Link className={'nav-link'} to={'/'}
                                       onClick={() => {
-                                          authDispatch({type: 'logoutSuccess'})
+                                          authDispatch(logoutSuccess())
                                       }}>{t('logout')}</Link>
                             </li>
                         </>
