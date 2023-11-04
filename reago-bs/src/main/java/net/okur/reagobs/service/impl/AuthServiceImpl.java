@@ -11,7 +11,6 @@ import net.okur.reagobs.token.Token;
 import net.okur.reagobs.token.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,13 +19,16 @@ public class AuthServiceImpl implements AuthService {
 
   private final UserService userService;
   private final TokenService tokenService;
-  private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+  private final PasswordEncoder passwordEncoder;
 
   @Autowired
   public AuthServiceImpl(
-      UserService userService, @Qualifier("basicAuthTokenService") TokenService tokenService) {
+      UserService userService,
+      @Qualifier("basicAuthTokenService") TokenService tokenService,
+      PasswordEncoder passwordEncoder) {
     this.userService = userService;
     this.tokenService = tokenService;
+    this.passwordEncoder = passwordEncoder;
   }
 
   @Override

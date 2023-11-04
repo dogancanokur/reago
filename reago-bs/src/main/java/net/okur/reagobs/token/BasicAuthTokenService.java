@@ -1,25 +1,24 @@
 package net.okur.reagobs.token;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import net.okur.reagobs.dto.request.Credentials;
 import net.okur.reagobs.entity.User;
 import net.okur.reagobs.error.exception.AuthenticationException;
 import net.okur.reagobs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 
 @Service
 public class BasicAuthTokenService implements TokenService {
   private final UserService userService;
-  PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+  private final PasswordEncoder passwordEncoder;
 
   @Autowired
-  public BasicAuthTokenService(UserService userService) {
+  public BasicAuthTokenService(UserService userService, PasswordEncoder passwordEncoder) {
     this.userService = userService;
+    this.passwordEncoder = passwordEncoder;
   }
 
   @Override

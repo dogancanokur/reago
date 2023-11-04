@@ -22,7 +22,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,19 +37,20 @@ public class UserServiceImpl implements UserService {
   public UserServiceImpl(
       UserRepository userRepository,
       EmailService emailService,
+      PasswordEncoder passwordEncoder,
       @Qualifier("basicAuthTokenService") @Lazy TokenService tokenService) {
     this.userRepository = userRepository;
     this.emailService = emailService;
+    this.passwordEncoder = passwordEncoder;
     this.tokenService = tokenService;
-    this.passwordEncoder = new BCryptPasswordEncoder();
   }
 
   @Override
   public Page<UserOutput> getAllUser(Pageable pageable, User loggedInUser) {
-    //    if (loggedInUser == null) {
-    return userRepository.findAll(pageable).map(UserOutput::new);
-    //    }
-    //    return userRepository.findByIdNot(loggedInUser.getId(), pageable).map(UserOutput::new);
+    if (loggedInUser == null) {
+      return userRepository.findAll(pageable).map(UserOutput::new);
+    }
+    return userRepository.findByIdNot(loggedInUser.getId(), pageable).map(UserOutput::new);
   }
 
   @Override
