@@ -19,15 +19,16 @@ import java.util.stream.Collectors;
 public class ErrorHandler {
 
   @ExceptionHandler({ //
-      NotFoundException.class, //
-      InvalidTokenException.class, //
-      MethodArgumentNotValidException.class, //
-      DataIntegrityViolationException.class, //
-      ActivationNotificationException.class, //
-      AuthenticationException.class, //
-      AuthorizationException.class //
+    NotFoundException.class, //
+    InvalidTokenException.class, //
+    MethodArgumentNotValidException.class, //
+    DataIntegrityViolationException.class, //
+    ActivationNotificationException.class, //
+    AuthenticationException.class, //
+    AuthorizationException.class //
   })
-  private ResponseEntity<ApiError> handleException(Exception exception, HttpServletRequest httpServletRequest) {
+  private ResponseEntity<ApiError> handleException(
+      Exception exception, HttpServletRequest httpServletRequest) {
 
     ApiError apiError = new ApiError();
     apiError.setPath(httpServletRequest.getRequestURI());
@@ -37,16 +38,21 @@ public class ErrorHandler {
     if (exception instanceof MethodArgumentNotValidException methodArgumentNotValidException) {
       apiError.setMessage(TranslateService.getMessage("reago.validation-error"));
       Map<String, String> validationErrors =
-          methodArgumentNotValidException.getBindingResult().getFieldErrors().stream().collect(
-              Collectors.toMap(FieldError::getField, fieldError -> StringUtils.hasText(fieldError.getDefaultMessage())
-                      ? fieldError.getDefaultMessage()
-                      : "",
-                  (existing, replacing) -> StringUtils.hasText(existing) ? existing + " " + replacing : replacing));
+          methodArgumentNotValidException.getBindingResult().getFieldErrors().stream()
+              .collect(
+                  Collectors.toMap(
+                      FieldError::getField,
+                      fieldError ->
+                          StringUtils.hasText(fieldError.getDefaultMessage())
+                              ? fieldError.getDefaultMessage()
+                              : "",
+                      (existing, replacing) ->
+                          StringUtils.hasText(existing) ? existing + " " + replacing : replacing));
       apiError.setValidationError(validationErrors);
       status = HttpStatus.BAD_REQUEST.value();
 
     } else if (exception instanceof NotFoundException) {
-//      apiError.setMessage(TranslateService.getMessage("reago.something-went-wrong"));
+      //      apiError.setMessage(TranslateService.getMessage("reago.something-went-wrong"));
       status = HttpStatus.BAD_REQUEST.value();
 
     } else if (exception instanceof ActivationNotificationException) {
@@ -60,11 +66,9 @@ public class ErrorHandler {
 
     } else if (exception instanceof InvalidTokenException) {
       status = HttpStatus.BAD_REQUEST.value();
-
     }
 
     apiError.setStatus(status);
     return ResponseEntity.status(status).body(apiError);
   }
-
 }

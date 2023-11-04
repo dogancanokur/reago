@@ -31,8 +31,8 @@ public class AuthController {
   }
 
   @ExceptionHandler(AuthenticationException.class)
-  public ResponseEntity<ApiError> handleAuthenticationException(AuthenticationException authenticationException,
-      HttpServletRequest httpServletRequest) {
+  public ResponseEntity<ApiError> handleAuthenticationException(
+      AuthenticationException authenticationException, HttpServletRequest httpServletRequest) {
 
     ApiError apiError = new ApiError();
     apiError.setStatus(HttpStatus.UNAUTHORIZED.value());
@@ -41,5 +41,4 @@ public class AuthController {
 
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED.value()).body(apiError);
   }
-
 }

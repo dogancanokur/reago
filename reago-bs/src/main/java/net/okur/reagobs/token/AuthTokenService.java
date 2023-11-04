@@ -1,10 +1,9 @@
 package net.okur.reagobs.token;
 
+import java.util.Base64;
 import net.okur.reagobs.dto.request.Credentials;
 import net.okur.reagobs.entity.User;
 import org.springframework.stereotype.Service;
-
-import java.util.Base64;
 
 @Service
 public class AuthTokenService implements TokenService {

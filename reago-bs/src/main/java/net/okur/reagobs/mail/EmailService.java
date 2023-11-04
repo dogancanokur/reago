@@ -2,6 +2,10 @@ package net.okur.reagobs.mail;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.mail.internet.MimeMessage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Properties;
 import net.okur.reagobs.configuration.AppConfig;
 import net.okur.reagobs.service.TranslateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +16,6 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.Properties;
 
 @Service
 public class EmailService {

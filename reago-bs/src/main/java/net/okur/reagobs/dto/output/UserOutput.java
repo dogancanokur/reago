@@ -1,10 +1,9 @@
 package net.okur.reagobs.dto.output;
 
+import java.io.Serializable;
 import lombok.Data;
 import net.okur.reagobs.entity.User;
 import org.springframework.util.StringUtils;
-
-import java.io.Serializable;
 
 /**
  * DTO for {@link net.okur.reagobs.entity.User}

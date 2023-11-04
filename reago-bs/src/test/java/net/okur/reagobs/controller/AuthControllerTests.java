@@ -13,15 +13,17 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @AutoConfigureMockMvc
 class AuthControllerTests {
 
-  @Autowired
-  private MockMvc mockMvc;
+  @Autowired private MockMvc mockMvc;
 
   @Test
   void testHandleAuthentication_Positive() throws Exception {
     String requestBody = "{\"email\":\"testuser\",\"password\":\"testpassword\"}";
 
-    mockMvc.perform(
-            MockMvcRequestBuilders.post("/api/v1/auth").contentType(MediaType.APPLICATION_JSON).content(requestBody))
+    mockMvc
+        .perform(
+            MockMvcRequestBuilders.post("/api/v1/auth")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody))
         .andExpect(MockMvcResultMatchers.status().isUnauthorized());
   }
 
@@ -29,8 +31,11 @@ class AuthControllerTests {
   void testHandleAuthentication_Negative() throws Exception {
     String requestBody = "{\"email\":\"user_1@reago.com\",\"password\":\"P4ssw0rd\"}";
 
-    mockMvc.perform(
-            MockMvcRequestBuilders.post("/api/v1/auth").contentType(MediaType.APPLICATION_JSON).content(requestBody))
+    mockMvc
+        .perform(
+            MockMvcRequestBuilders.post("/api/v1/auth")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody))
         .andExpect(MockMvcResultMatchers.status().isOk());
   }
 }

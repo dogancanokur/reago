@@ -1,11 +1,12 @@
 //$primary: rgba(158, 96, 224, 0.73);
 
-@import 'node_modules/bootstrap/scss/bootstrap';
+@import "node_modules/bootstrap/scss/bootstrap";
 
 tbody {
   tr {
     &:hover {
-      td, th {
+      td,
+      th {
         background: $primary-bg-subtle;
       }
     }

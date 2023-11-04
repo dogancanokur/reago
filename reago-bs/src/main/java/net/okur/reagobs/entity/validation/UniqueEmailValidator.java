@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, String> {
 
-  @Autowired
-  UserRepository userRepository;
+  @Autowired UserRepository userRepository;
 
   @Override
   public boolean isValid(String value, ConstraintValidatorContext context) {

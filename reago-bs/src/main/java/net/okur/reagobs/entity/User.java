@@ -37,5 +37,4 @@ public class User {
 
   @Column(name = "image")
   private String image;
-
 }

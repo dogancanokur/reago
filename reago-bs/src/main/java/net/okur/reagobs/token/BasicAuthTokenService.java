@@ -34,7 +34,8 @@ public class BasicAuthTokenService implements TokenService {
       throw new AuthenticationException();
     }
     String base64Encoded = authorizationHeader.split("Basic ")[1];
-    String decodedValues = new String(Base64.getDecoder().decode(base64Encoded), StandardCharsets.UTF_8);
+    String decodedValues =
+        new String(Base64.getDecoder().decode(base64Encoded), StandardCharsets.UTF_8);
     var credentials = decodedValues.split(":");
     var email = credentials[0];
     var password = credentials[1];

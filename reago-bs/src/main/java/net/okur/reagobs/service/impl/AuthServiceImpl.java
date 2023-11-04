@@ -23,7 +23,8 @@ public class AuthServiceImpl implements AuthService {
   private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
   @Autowired
-  public AuthServiceImpl(UserService userService, @Qualifier("basicAuthTokenService") TokenService tokenService) {
+  public AuthServiceImpl(
+      UserService userService, @Qualifier("basicAuthTokenService") TokenService tokenService) {
     this.userService = userService;
     this.tokenService = tokenService;
   }
@@ -43,5 +44,4 @@ public class AuthServiceImpl implements AuthService {
 
     return authResponse;
   }
-
 }

@@ -6,8 +6,7 @@ import net.okur.reagobs.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class UniqueUsernameValidation implements ConstraintValidator<UniqueUsername, String> {
-  @Autowired
-  UserRepository userRepository;
+  @Autowired UserRepository userRepository;
 
   @Override
   public boolean isValid(String value, ConstraintValidatorContext context) {

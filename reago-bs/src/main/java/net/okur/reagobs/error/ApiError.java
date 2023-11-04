@@ -1,10 +1,9 @@
 package net.okur.reagobs.error;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.*;
-
 import java.util.Date;
 import java.util.Map;
+import lombok.*;
 
 @Getter
 @Setter
@@ -17,5 +16,4 @@ public class ApiError {
   private String path;
   private long timestamp = new Date().getTime();
   private Map<String, String> validationError;
-
 }

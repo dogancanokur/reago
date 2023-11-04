@@ -1,13 +1,12 @@
 package net.okur.reagobs.service;
 
+import java.util.Optional;
 import net.okur.reagobs.dto.input.UserInput;
 import net.okur.reagobs.dto.input.UserSaveInput;
 import net.okur.reagobs.dto.output.UserOutput;
 import net.okur.reagobs.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.util.Optional;
 
 public interface UserService {
 
