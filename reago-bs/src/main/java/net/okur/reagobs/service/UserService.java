@@ -1,10 +1,13 @@
 package net.okur.reagobs.service;
 
 import net.okur.reagobs.dto.input.UserInput;
+import net.okur.reagobs.dto.input.UserSaveInput;
 import net.okur.reagobs.dto.output.UserOutput;
 import net.okur.reagobs.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.Optional;
 
 public interface UserService {
 
@@ -12,13 +15,15 @@ public interface UserService {
 
   UserOutput getByUserId(Long id);
 
-  UserOutput createUser(UserInput userInput);
+  UserOutput createUser(UserSaveInput userSaveInput);
 
-  User updateUser(User user);
+  UserOutput updateUser(Long userId, UserInput user, String authHeader);
 
   void deleteUser(Long id);
 
   void activateUser(String token);
 
   User findByEmail(String email);
+
+  Optional<User> findByUserId(Long id);
 }

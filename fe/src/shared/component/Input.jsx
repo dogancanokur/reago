@@ -6,7 +6,7 @@
  * @constructor
  */
 export const Input = props => {
-    const {id, name, labelText, validationError, onChange} = props;
+    const {id, name, labelText, validationError, onChange, defaultValue} = props;
     const type = props.type === '' ? 'text' : props.type;
 
     return (
@@ -14,7 +14,7 @@ export const Input = props => {
             <label htmlFor={id} className="form-label">{labelText}</label>
             <input className={'form-control ' + (validationError ? 'is-invalid' : '')}
                    id={id} name={name} type={type}
-                   onChange={onChange}/>
+                   onChange={onChange} defaultValue={defaultValue}/>
             <div className={'invalid-feedback'}>{validationError}</div>
         </div>
     );

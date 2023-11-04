@@ -8,4 +8,8 @@ public class NotFoundException extends RuntimeException {
     super(TranslateService.getMessageFromLocale("reago.not-found-with-args", id));
   }
 
+  public NotFoundException(String message) {
+
+    super(message);
+  }
 }

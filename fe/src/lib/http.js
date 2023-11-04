@@ -15,7 +15,6 @@ http.interceptors.request.use((config) => {
     config.headers["Accept-Language"] = i18nInstance.language;
     if (authToken) {
         config.headers["Authorization"] = `${authToken.prefix} ${authToken.token}`;
-        console.log(`${authToken.prefix} ${authToken.token}`);
     }
     return config;
 });

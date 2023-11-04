@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "users", uniqueConstraints = @UniqueConstraint(columnNames = { "email" }))
+@Table(name = "users")
 public class User {
 
   @Id
@@ -16,17 +16,14 @@ public class User {
   @Column(name = "id", nullable = false)
   private Long id;
 
-  @Column(name = "username", nullable = false, length = 25)
+  @Column(name = "username", nullable = false, unique = true, length = 25)
   private String username;
 
-  @Column(name = "email", nullable = false)
+  @Column(name = "email", nullable = false, unique = true, length = 50)
   private String email;
 
-  @Column(name = "first_name")
-  private String firstName;
-
-  @Column(name = "last_name")
-  private String lastName;
+  @Column(name = "name")
+  private String name;
 
   @JsonIgnore
   @Column(name = "password", nullable = false)

@@ -2,9 +2,9 @@ package net.okur.reagobs.controller;
 
 import jakarta.validation.Valid;
 import net.okur.reagobs.dto.input.UserInput;
+import net.okur.reagobs.dto.input.UserSaveInput;
 import net.okur.reagobs.dto.output.UserOutput;
 import net.okur.reagobs.dto.response.GenericResponse;
-import net.okur.reagobs.entity.User;
 import net.okur.reagobs.service.TranslateService;
 import net.okur.reagobs.service.UserService;
 import net.okur.reagobs.token.BasicAuthTokenService;
@@ -23,7 +23,9 @@ public class UserController {
   private final BasicAuthTokenService tokenService;
 
   @Autowired
-  public UserController(UserService userService, TranslateService translateService,
+  public UserController(
+      UserService userService,
+      TranslateService translateService,
       @Qualifier("basicAuthTokenService") BasicAuthTokenService tokenService) {
     this.userService = userService;
     this.translateService = translateService;
@@ -31,7 +33,7 @@ public class UserController {
   }
 
   @PostMapping("/api/v1/users/")
-  public GenericResponse createUser(@Valid @RequestBody UserInput userInput) {
+  public GenericResponse createUser(@Valid @RequestBody UserSaveInput userInput) {
 
     userService.createUser(userInput);
     String translateMessage = TranslateService.getMessage("reago.user.create.success.message");
@@ -39,8 +41,10 @@ public class UserController {
   }
 
   @GetMapping("/api/v1/users/")
-  public ResponseEntity<Page<UserOutput>> getAllUsers(Pageable pageable,
-      //(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10", name = "pageSize") int size)
+  public ResponseEntity<Page<UserOutput>> getAllUsers(
+      Pageable pageable,
+      // (@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10", name =
+      // "pageSize") int size)
       @RequestHeader(name = "Authorization", required = false) String authorizationHeader) {
 
     var loggedInUser = tokenService.verifyToken(authorizationHeader);
@@ -53,12 +57,14 @@ public class UserController {
     return ResponseEntity.ok(userService.getByUserId(userId));
   }
 
-  @PutMapping("/api/v1/users/")
-  public GenericResponse updateUser(@RequestBody User user) {
+  @PutMapping("/api/v1/users/{userId}")
+  public ResponseEntity<UserOutput> updateUser(
+      @PathVariable Long userId,
+      @Valid @RequestBody UserInput userInput,
+      @RequestHeader(name = "Authorization") String authHeader) {
 
-    userService.updateUser(user);
-    return new GenericResponse(
-        translateService.getMessageWithArgs("reago.user.update.success.message", user.getUsername()));
+    UserOutput user = userService.updateUser(userId, userInput, authHeader);
+    return ResponseEntity.ok(user);
   }
 
   @DeleteMapping("/api/v1/users/{id}")
@@ -72,6 +78,5 @@ public class UserController {
     userService.activateUser(token);
     String message = TranslateService.getMessage("reago.user-activated-successfully");
     return new GenericResponse(message);
-
   }
 }

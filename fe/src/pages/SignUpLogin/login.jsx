@@ -40,7 +40,6 @@ export function Login() {
             const {token, userOutput} = response.data;
             authDispatch({type: 'loginSuccess', data: {token, user: userOutput}});
             navigate("/");
-            console.log(token);
 
         } catch (error) {
             if (error.response?.data) {

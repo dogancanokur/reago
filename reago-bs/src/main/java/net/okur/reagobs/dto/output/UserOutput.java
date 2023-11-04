@@ -15,14 +15,13 @@ public class UserOutput implements Serializable {
   String username;
   String email;
   String image;
-  String fullName;
+  String name;
 
   public UserOutput(User user) {
     setId(user.getId());
     setUsername(user.getUsername());
     setEmail(user.getEmail());
-    setFullName((StringUtils.hasText(user.getFirstName()) ? user.getFirstName() : "") + " " + (StringUtils.hasText(
-        user.getLastName()) ? user.getLastName() : ""));
+    setName(user.getName());
     setImage(user.getImage());
   }
 

@@ -27,11 +27,10 @@ public class ReagoBsApplication {
       for (var i = 1; i <= 500; i++) {
         User user = new User();
         user.setUsername("user_" + i);
-        user.setEmail("user" + i + "@reago.com");
+        user.setEmail("user%d@reago.com".formatted(i));
         user.setPassword(passwordEncoder.encode("P4ssw0rd"));
         user.setActive(Boolean.TRUE);
-        user.setFirstName("User" + i);
-        user.setLastName("Reago");
+        user.setName("%d User Reago".formatted(i));
         userRepository.save(user);
       }
     };

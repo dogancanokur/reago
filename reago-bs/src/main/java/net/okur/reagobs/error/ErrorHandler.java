@@ -1,9 +1,7 @@
 package net.okur.reagobs.error;
 
 import jakarta.servlet.http.HttpServletRequest;
-import net.okur.reagobs.error.exception.ActivationNotificationException;
-import net.okur.reagobs.error.exception.InvalidTokenException;
-import net.okur.reagobs.error.exception.NotFoundException;
+import net.okur.reagobs.error.exception.*;
 import net.okur.reagobs.service.TranslateService;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -25,7 +23,9 @@ public class ErrorHandler {
       InvalidTokenException.class, //
       MethodArgumentNotValidException.class, //
       DataIntegrityViolationException.class, //
-      ActivationNotificationException.class //
+      ActivationNotificationException.class, //
+      AuthenticationException.class, //
+      AuthorizationException.class //
   })
   private ResponseEntity<ApiError> handleException(Exception exception, HttpServletRequest httpServletRequest) {
 
@@ -45,12 +45,21 @@ public class ErrorHandler {
       apiError.setValidationError(validationErrors);
       status = HttpStatus.BAD_REQUEST.value();
 
-    } else if (exception instanceof DataIntegrityViolationException) {
-      apiError.setMessage(TranslateService.getMessage("reago.something-went-wrong"));
+    } else if (exception instanceof NotFoundException) {
+//      apiError.setMessage(TranslateService.getMessage("reago.something-went-wrong"));
       status = HttpStatus.BAD_REQUEST.value();
 
     } else if (exception instanceof ActivationNotificationException) {
       status = HttpStatus.BAD_GATEWAY.value();
+
+    } else if (exception instanceof AuthenticationException) {
+      status = HttpStatus.UNAUTHORIZED.value();
+
+    } else if (exception instanceof AuthorizationException) {
+      status = HttpStatus.FORBIDDEN.value();
+
+    } else if (exception instanceof InvalidTokenException) {
+      status = HttpStatus.BAD_REQUEST.value();
 
     }
 

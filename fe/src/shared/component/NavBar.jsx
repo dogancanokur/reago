@@ -33,7 +33,7 @@ export function NavBar() {
                     {authState.id !== 0 &&
                         <>
                             <li className={'nav-item'}>
-                                <Link className={'nav-link'} to={'/user/:userId'}>@{authState.username}</Link>
+                                <Link className={'nav-link'} to={`/user/${authState.id}`}>@{authState.username}</Link>
                             </li>
                             <li className={'nav-item'}>
                                 <Link className={'nav-link'} to={'/'}

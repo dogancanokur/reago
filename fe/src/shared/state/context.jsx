@@ -24,6 +24,14 @@ const authReducer = (authState, action) => {
             setToken(null);
             return {id: 0};
         }
+        case 'user-update-success': {
+            return {
+                ...authState,
+                username: action.data.username,
+                email: action.data.email,
+                name: action.data.name
+            };
+        }
         default:
             throw new Error(`unknown action: ${action.type}`);
     }

@@ -53,7 +53,7 @@ export function UserListPage() {
                         <th scope="col">{t('username')}</th>
                         <th scope="col">{t('email')}</th>
                         <th scope="col">{t('image')}</th>
-                        <th scope="col">{t('fullName')}</th>
+                        <th scope="col">{t('name')}</th>
                     </tr>
                     </thead>
                     <tbody>

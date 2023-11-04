@@ -8,7 +8,7 @@ export interface User {
     username: string;
     email: string;
     image: string;
-    fullName: string;
+    name: string;
 }
 
 interface UserListItemProps {
@@ -35,8 +35,8 @@ export function UserListItem({user}: UserListItemProps) {
                 {user.username}
             </th>
             <td style={{...spreadElements}}>{user.email}</td>
-            <td style={{...spreadElements}}>{user.fullName}</td>
-            <td style={{...spreadElements}}>{user.fullName}</td>
+            <td style={{...spreadElements}}>{user.image}</td>
+            <td style={{...spreadElements}}>{user.name}</td>
         </tr>
     );
 }
