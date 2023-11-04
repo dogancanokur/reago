@@ -1,6 +1,8 @@
 package net.okur.reagobs.error;
 
 import jakarta.servlet.http.HttpServletRequest;
+import java.util.Map;
+import java.util.stream.Collectors;
 import net.okur.reagobs.error.exception.*;
 import net.okur.reagobs.service.TranslateService;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -12,20 +14,16 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.Map;
-import java.util.stream.Collectors;
-
 @RestControllerAdvice
 public class ErrorHandler {
 
-  @ExceptionHandler({ //
-    NotFoundException.class, //
-    InvalidTokenException.class, //
-    MethodArgumentNotValidException.class, //
-    DataIntegrityViolationException.class, //
-    ActivationNotificationException.class, //
-    AuthenticationException.class, //
-    AuthorizationException.class //
+  @ExceptionHandler({
+    NotFoundException.class,
+    InvalidTokenException.class,
+    MethodArgumentNotValidException.class,
+    DataIntegrityViolationException.class,
+    ActivationNotificationException.class,
+    AuthenticationException.class
   })
   private ResponseEntity<ApiError> handleException(
       Exception exception, HttpServletRequest httpServletRequest) {
@@ -52,7 +50,6 @@ public class ErrorHandler {
       status = HttpStatus.BAD_REQUEST.value();
 
     } else if (exception instanceof NotFoundException) {
-      //      apiError.setMessage(TranslateService.getMessage("reago.something-went-wrong"));
       status = HttpStatus.BAD_REQUEST.value();
 
     } else if (exception instanceof ActivationNotificationException) {
@@ -60,9 +57,6 @@ public class ErrorHandler {
 
     } else if (exception instanceof AuthenticationException) {
       status = HttpStatus.UNAUTHORIZED.value();
-
-    } else if (exception instanceof AuthorizationException) {
-      status = HttpStatus.FORBIDDEN.value();
 
     } else if (exception instanceof InvalidTokenException) {
       status = HttpStatus.BAD_REQUEST.value();

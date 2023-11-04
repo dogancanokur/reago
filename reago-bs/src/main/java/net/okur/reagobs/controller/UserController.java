@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -52,6 +53,7 @@ public class UserController {
   }
 
   @PutMapping("/api/v1/users/")
+  @PreAuthorize("#userInput.id == principal.id")
   public ResponseEntity<UserOutput> updateUser(@Valid @RequestBody UserInput userInput) {
 
     UserOutput user = userService.updateUser(userInput);

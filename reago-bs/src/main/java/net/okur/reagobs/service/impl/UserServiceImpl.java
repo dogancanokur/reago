@@ -11,7 +11,6 @@ import net.okur.reagobs.dto.input.UserSaveInput;
 import net.okur.reagobs.dto.output.UserOutput;
 import net.okur.reagobs.entity.User;
 import net.okur.reagobs.error.exception.ActivationNotificationException;
-import net.okur.reagobs.error.exception.AuthorizationException;
 import net.okur.reagobs.error.exception.InvalidTokenException;
 import net.okur.reagobs.error.exception.NotFoundException;
 import net.okur.reagobs.mail.EmailService;
@@ -91,9 +90,6 @@ public class UserServiceImpl implements UserService {
             });
 
     User user = findByUserId(userId).orElseThrow(() -> new NotFoundException(userId));
-    if (!user.getId().equals(UserServiceImpl.getUserPrincipal().getId())) {
-      throw new AuthorizationException();
-    }
     user.setUsername(userInput.getUsername());
     return new UserOutput(userRepository.save(user));
   }
