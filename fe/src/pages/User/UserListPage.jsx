@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Alert } from "@/shared/component/Alert.jsx";
 import { loadUsers } from "@/pages/User/api.js";
 import { Spinner } from "@/shared/component/Spinner.jsx";
-import { UserListItem } from "@/pages/User/component/UserListItem.tsx";
+import { UserListItem } from "@/pages/User/component/UserListItem.jsx";
 
 export function UserListPage() {
   const { t } = useTranslation();

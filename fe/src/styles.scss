@@ -4,6 +4,13 @@
 
 tbody {
   tr {
+    td,
+    th {
+      &.selected {
+        background: $success-bg-subtle;
+      }
+    }
+
     &:hover {
       td,
       th {
