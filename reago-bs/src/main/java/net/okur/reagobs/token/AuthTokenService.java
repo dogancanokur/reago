@@ -14,7 +14,4 @@ public class AuthTokenService implements TokenService {
     return new Token("Basic", token);
   }
 
-  public User verifyToken(String authorizationToken) {
-    return null;
-  }
 }

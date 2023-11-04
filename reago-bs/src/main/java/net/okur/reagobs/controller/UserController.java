@@ -1,35 +1,29 @@
 package net.okur.reagobs.controller;
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import net.okur.reagobs.dto.input.UserInput;
 import net.okur.reagobs.dto.input.UserSaveInput;
 import net.okur.reagobs.dto.output.UserOutput;
 import net.okur.reagobs.dto.response.GenericResponse;
 import net.okur.reagobs.service.TranslateService;
 import net.okur.reagobs.service.UserService;
-import net.okur.reagobs.token.BasicAuthTokenService;
+import net.okur.reagobs.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Slf4j
 public class UserController {
 
   private final UserService userService;
-  private final TranslateService translateService;
-  private final BasicAuthTokenService tokenService;
 
   @Autowired
-  public UserController(
-      UserService userService,
-      TranslateService translateService,
-      @Qualifier("basicAuthTokenService") BasicAuthTokenService tokenService) {
+  public UserController(UserService userService) {
     this.userService = userService;
-    this.translateService = translateService;
-    this.tokenService = tokenService;
   }
 
   @PostMapping("/api/v1/users/")
@@ -41,15 +35,15 @@ public class UserController {
   }
 
   @GetMapping("/api/v1/users/")
-  public ResponseEntity<Page<UserOutput>> getAllUsers(
-      Pageable pageable,
-      // (@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10", name =
-      // "pageSize") int size)
-      @RequestHeader(name = "Authorization", required = false) String authorizationHeader) {
+  public ResponseEntity<Page<UserOutput>> getAllUsers(Pageable pageable) {
 
-    var loggedInUser = tokenService.verifyToken(authorizationHeader);
+    try {
+      var userId = UserServiceImpl.getUserPrincipal().getId();
+      return ResponseEntity.ok(userService.getAllUser(pageable, userId));
 
-    return ResponseEntity.ok(userService.getAllUser(pageable, loggedInUser));
+    } catch (Exception e) {
+      return ResponseEntity.ok(userService.getAllUser(pageable, null));
+    }
   }
 
   @GetMapping("/api/v1/users/{userId}")
@@ -57,13 +51,10 @@ public class UserController {
     return ResponseEntity.ok(userService.getByUserId(userId));
   }
 
-  @PutMapping("/api/v1/users/{userId}")
-  public ResponseEntity<UserOutput> updateUser(
-      @PathVariable Long userId,
-      @Valid @RequestBody UserInput userInput,
-      @RequestHeader(name = "Authorization") String authHeader) {
+  @PutMapping("/api/v1/users/")
+  public ResponseEntity<UserOutput> updateUser(@Valid @RequestBody UserInput userInput) {
 
-    UserOutput user = userService.updateUser(userId, userInput, authHeader);
+    UserOutput user = userService.updateUser(userInput);
     return ResponseEntity.ok(user);
   }
 

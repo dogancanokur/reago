@@ -10,19 +10,19 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserService {
 
-  Page<UserOutput> getAllUser(Pageable pageable, User loggedInUser);
+  Page<UserOutput> getAllUser(Pageable pageable, Long userId);
 
   UserOutput getByUserId(Long id);
 
-  UserOutput createUser(UserSaveInput userSaveInput);
+  void createUser(UserSaveInput userSaveInput);
 
-  UserOutput updateUser(Long userId, UserInput user, String authHeader);
+  UserOutput updateUser(UserInput userInput);
 
   void deleteUser(Long id);
 
   void activateUser(String token);
 
-  User findByEmail(String email);
+  Optional<User> findByEmail(String email);
 
   Optional<User> findByUserId(Long id);
 }

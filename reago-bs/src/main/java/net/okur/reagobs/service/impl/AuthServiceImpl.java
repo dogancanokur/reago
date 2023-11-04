@@ -33,8 +33,9 @@ public class AuthServiceImpl implements AuthService {
 
   @Override
   public AuthResponse authenticate(Credentials credentials) {
-    User user = userService.findByEmail(credentials.email());
-    if (user == null || !passwordEncoder.matches(credentials.password(), user.getPassword())) {
+    User user =
+        userService.findByEmail(credentials.email()).orElseThrow(AuthenticationException::new);
+    if (!passwordEncoder.matches(credentials.password(), user.getPassword())) {
       throw new AuthenticationException();
     }
 

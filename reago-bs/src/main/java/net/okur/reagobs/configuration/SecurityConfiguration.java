@@ -2,6 +2,7 @@ package net.okur.reagobs.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,10 +21,11 @@ public class SecurityConfiguration {
     httpSecurity.authorizeHttpRequests(
         authorizationManagerRequestMatcherRegistry ->
             authorizationManagerRequestMatcherRegistry
-                .requestMatchers(AntPathRequestMatcher.antMatcher("/secured"))
+                .requestMatchers(
+                    AntPathRequestMatcher.antMatcher(HttpMethod.PUT, "/api/v1/users/{userId}"))
                 .authenticated()
                 .anyRequest()
-                .authenticated());
+                .permitAll());
 
     httpSecurity.headers(AbstractHttpConfigurer::disable);
     httpSecurity.csrf(AbstractHttpConfigurer::disable);

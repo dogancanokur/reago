@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import java.util.Optional;
 import java.util.UUID;
+import net.okur.reagobs.configuration.CurrentUser;
 import net.okur.reagobs.dto.input.UserInput;
 import net.okur.reagobs.dto.input.UserSaveInput;
 import net.okur.reagobs.dto.output.UserOutput;
@@ -16,12 +17,10 @@ import net.okur.reagobs.error.exception.NotFoundException;
 import net.okur.reagobs.mail.EmailService;
 import net.okur.reagobs.repository.UserRepository;
 import net.okur.reagobs.service.UserService;
-import net.okur.reagobs.token.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,26 +30,25 @@ public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
   private final EmailService emailService;
   private final PasswordEncoder passwordEncoder;
-  private final TokenService tokenService;
 
   @Autowired
   public UserServiceImpl(
-      UserRepository userRepository,
-      EmailService emailService,
-      PasswordEncoder passwordEncoder,
-      @Qualifier("basicAuthTokenService") @Lazy TokenService tokenService) {
+      UserRepository userRepository, EmailService emailService, PasswordEncoder passwordEncoder) {
     this.userRepository = userRepository;
     this.emailService = emailService;
     this.passwordEncoder = passwordEncoder;
-    this.tokenService = tokenService;
+  }
+
+  public static CurrentUser getUserPrincipal() {
+    return (CurrentUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
   }
 
   @Override
-  public Page<UserOutput> getAllUser(Pageable pageable, User loggedInUser) {
-    if (loggedInUser == null) {
+  public Page<UserOutput> getAllUser(Pageable pageable, Long userId) {
+    if (userId == null) {
       return userRepository.findAll(pageable).map(UserOutput::new);
     }
-    return userRepository.findByIdNot(loggedInUser.getId(), pageable).map(UserOutput::new);
+    return userRepository.findByIdNot(userId, pageable).map(UserOutput::new);
   }
 
   @Override
@@ -62,7 +60,7 @@ public class UserServiceImpl implements UserService {
   @Transactional(
       value = Transactional.TxType.REQUIRED,
       rollbackOn = {Exception.class})
-  public UserOutput createUser(UserSaveInput userSaveInput) {
+  public void createUser(UserSaveInput userSaveInput) {
     try {
 
       User user = userSaveInput.toUser();
@@ -73,7 +71,7 @@ public class UserServiceImpl implements UserService {
       emailService.sendActivationEmail(
           user.getEmail(), user.getUsername(), user.getActivationToken());
 
-      return new UserOutput(user);
+      new UserOutput(user);
 
     } catch (Exception e) {
       throw new ActivationNotificationException();
@@ -81,13 +79,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public UserOutput updateUser(Long userId, UserInput userInput, String authHeader) {
-
-    User authorizedUser = tokenService.verifyToken(authHeader);
-    if (!authorizedUser.getId().equals(userId)) {
-      throw new AuthorizationException();
-    }
-
+  public UserOutput updateUser(UserInput userInput) {
+    Long userId = userInput.getId();
     userRepository
         .findByUsername(userInput.getUsername())
         .ifPresent(
@@ -98,6 +91,9 @@ public class UserServiceImpl implements UserService {
             });
 
     User user = findByUserId(userId).orElseThrow(() -> new NotFoundException(userId));
+    if (!user.getId().equals(UserServiceImpl.getUserPrincipal().getId())) {
+      throw new AuthorizationException();
+    }
     user.setUsername(userInput.getUsername());
     return new UserOutput(userRepository.save(user));
   }
@@ -119,7 +115,7 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User findByEmail(String email) {
+  public Optional<User> findByEmail(String email) {
     return userRepository.findByEmail(email);
   }
 

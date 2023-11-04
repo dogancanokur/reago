@@ -14,7 +14,8 @@ export function ProfileCard({ user }) {
 
   const isEditButtonVisible = !editMode && authState.id === user.id;
 
-  return (
+    const visibleUsername = authState.id === user.id ? authState.username : user.username;
+    return (
     <div className="card">
       <div className="card-header text-center">
         <ProfileImage alt={"profileImage"} width={100} />
@@ -24,7 +25,7 @@ export function ProfileCard({ user }) {
           <Alert message={generalError} center={true} styleType={"danger"} />
         )}
         {!editMode && (
-          <span className="fs-3 d-block mb-2">{authState.username}</span>
+          <span className="fs-3 d-block mb-2">{visibleUsername}</span>
         )}
         {isEditButtonVisible && (
           <Button onClick={() => setEditMode(true)} text={t("edit")} />

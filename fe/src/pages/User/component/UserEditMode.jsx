@@ -22,7 +22,7 @@ export function UserEditMode({ setGeneralError, setEditMode }) {
     setErrors({});
     setGeneralError();
     try {
-      await updateUser(authState.id, {
+      await updateUser({
         id: authState.id,
         username: newUsername,
       });

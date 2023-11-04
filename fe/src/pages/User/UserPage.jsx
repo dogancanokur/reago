@@ -11,8 +11,6 @@ export function UserPage() {
     error: errorMessage,
   } = useRouteParamApiRequest("userId", getUser);
 
-  let page = "";
-
   if (apiProgress) {
     return (
       <Alert
@@ -22,16 +20,12 @@ export function UserPage() {
       />
     );
   }
-  if (user) {
-    page = <ProfileCard user={user} />;
-  }
-
   return (
     <>
       {errorMessage && (
         <Alert styleType={"danger"} message={errorMessage} center={false} />
       )}
-      {page}
+      {user && <ProfileCard user={user} />}
     </>
   );
 }

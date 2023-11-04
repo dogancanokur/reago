@@ -6,6 +6,4 @@ import net.okur.reagobs.entity.User;
 public interface TokenService {
 
   Token createToken(User user, Credentials credentials);
-
-  User verifyToken(String authorizationToken);
 }
