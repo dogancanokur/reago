@@ -3,11 +3,8 @@ package net.okur.reagobs.dto.output;
 import java.io.Serializable;
 import lombok.Data;
 import net.okur.reagobs.entity.User;
-import org.springframework.util.StringUtils;
 
-/**
- * DTO for {@link net.okur.reagobs.entity.User}
- */
+/** DTO for {@link net.okur.reagobs.entity.User} */
 @Data
 public class UserOutput implements Serializable {
   Long id;
@@ -24,7 +21,7 @@ public class UserOutput implements Serializable {
     setImage(user.getImage());
   }
 
-  public String getImage() {
-    return StringUtils.hasText(image) ? image : "default.png";
-  }
+  //  public String getImage() {
+  //    return StringUtils.hasText(image) ? image : "default.png";
+  //  }
 }

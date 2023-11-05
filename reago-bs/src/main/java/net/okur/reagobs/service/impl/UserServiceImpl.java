@@ -22,6 +22,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -91,7 +92,10 @@ public class UserServiceImpl implements UserService {
 
     User user = findByUserId(userId).orElseThrow(() -> new NotFoundException(userId));
     user.setUsername(userInput.getUsername());
-    user.setImage(userInput.getImage());
+    if (StringUtils.hasText(userInput.getImage())) {
+      user.setImage(userInput.getImage());
+    }
+
     return new UserOutput(userRepository.save(user));
   }
 
