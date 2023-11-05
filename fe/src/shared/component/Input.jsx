@@ -8,7 +8,7 @@
 export const Input = (props) => {
   const { id, name, labelText, validationError, onChange, defaultValue } =
     props;
-  const type = props.type === "" ? "text" : props.type;
+    const type = props.type === '' ? 'text' : props.type;
 
   return (
     <div className="mb-3">
@@ -16,14 +16,14 @@ export const Input = (props) => {
         {labelText}
       </label>
       <input
-        className={"form-control " + (validationError ? "is-invalid" : "")}
+        className={'form-control ' + (validationError ? 'is-invalid' : '')}
         id={id}
         name={name}
         type={type}
         onChange={onChange}
         defaultValue={defaultValue}
       />
-      <div className={"invalid-feedback"}>{validationError}</div>
+      <div className={'invalid-feedback'}>{validationError}</div>
     </div>
   );
 };

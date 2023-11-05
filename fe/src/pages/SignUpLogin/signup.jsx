@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
-import { signUp } from "@/pages/SignUpLogin/api.js";
-import { useTranslation } from "react-i18next";
-import { Alert } from "@/shared/component/Alert.jsx";
-import { Spinner } from "@/shared/component/Spinner.jsx";
-import { Input } from "@/shared/component/Input.jsx";
-import { Button } from "@/shared/component/Button.jsx";
+import { useEffect, useMemo, useState } from 'react';
+import { signUp } from '@/pages/SignUpLogin/api.js';
+import { useTranslation } from 'react-i18next';
+import { Alert } from '@/shared/component/Alert.jsx';
+import { Spinner } from '@/shared/component/Spinner.jsx';
+import { Input } from '@/shared/component/Input.jsx';
+import { Button } from '@/shared/component/Button.jsx';
 
 export function SignUp() {
   // useStates
@@ -13,8 +13,8 @@ export function SignUp() {
   const [password, setPassword] = useState();
   const [passwordRepeat, setPasswordRepeat] = useState();
   const [apiProgress, setApiProgress] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [validationErrors, setValidationErrors] = useState({});
   const { t } = useTranslation();
 
@@ -40,8 +40,8 @@ export function SignUp() {
   const signUpSubmit = async (e) => {
     e.preventDefault();
     setApiProgress(true);
-    setSuccessMessage("");
-    setErrorMessage("");
+    setSuccessMessage('');
+    setErrorMessage('');
     setValidationErrors({});
     try {
       const response = await signUp({ username, email, password });
@@ -55,7 +55,7 @@ export function SignUp() {
           setErrorMessage(error.response.data.message);
         }
       } else {
-        setErrorMessage(t("genericError"));
+        setErrorMessage(t('genericError'));
       }
     } finally {
       setApiProgress(false);
@@ -63,7 +63,7 @@ export function SignUp() {
   };
   const passwordRepeatError = useMemo(() => {
     if (password && password !== passwordRepeat) {
-      return t("passwordMismatch");
+      return t('passwordMismatch');
     }
   }, [password, passwordRepeat]);
 
@@ -72,61 +72,61 @@ export function SignUp() {
 
   let buttonText = (
     <>
-      {apiProgress && <Spinner />} {t("sign-up")}
+      {apiProgress && <Spinner />} {t('sign-up')}
     </>
   );
   return (
-    <div className={"container"}>
-      <div className={"col-8 offset-2"}>
-        <form className={"card"} onSubmit={signUpSubmit}>
-          <h1 className={"card-header text-center"}>{t("sign-up")}</h1>
-          <div className={"card-body"}>
+    <div className={'container'}>
+      <div className={'col-8 offset-2'}>
+        <form className={'card'} onSubmit={signUpSubmit}>
+          <h1 className={'card-header text-center'}>{t('sign-up')}</h1>
+          <div className={'card-body'}>
             <Input
-              id={"username"}
-              name={"username"}
-              labelText={t("username")}
+              id={'username'}
+              name={'username'}
+              labelText={t('username')}
               validationError={validationErrors?.username}
               onChange={(event) => setUsername(event.target.value)}
             ></Input>
 
             <Input
-              id={"email"}
-              name={"email"}
-              labelText={t("email")}
+              id={'email'}
+              name={'email'}
+              labelText={t('email')}
               validationError={validationErrors?.email}
               onChange={(event) => setEmail(event.target.value)}
             ></Input>
 
             <Input
-              id={"password"}
-              name={"password"}
-              labelText={t("password")}
+              id={'password'}
+              name={'password'}
+              labelText={t('password')}
               validationError={validationErrors?.password}
-              type={"password"}
+              type={'password'}
               onChange={(event) => setPassword(event.target.value)}
             ></Input>
 
             <Input
-              id={"passwordRepeat"}
-              name={"passwordRepeat"}
-              labelText={t("passwordRepeat")}
+              id={'passwordRepeat'}
+              name={'passwordRepeat'}
+              labelText={t('passwordRepeat')}
               validationError={passwordRepeatError}
-              type={"password"}
+              type={'password'}
               onChange={(event) => setPasswordRepeat(event.target.value)}
             ></Input>
 
             {successMessage && (
-              <Alert styleType={"success"} message={successMessage} />
+              <Alert styleType={'success'} message={successMessage} />
             )}
             {errorMessage && (
-              <Alert styleType={"danger"} message={errorMessage} />
+              <Alert styleType={'danger'} message={errorMessage} />
             )}
             <div className="mb-3 text-center">
               <Button
                 disabled={isSignUpButtonDisabled}
-                type={"submit"}
-                className={"btn-primary"}
-                text={t("submit")}
+                type={'submit'}
+                className={'btn-primary'}
+                text={t('submit')}
                 apiProgress={apiProgress}
               />
             </div>

@@ -1,8 +1,8 @@
 // eslint-disable-next-line no-unused-vars
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import { ProfileImage } from "@/pages/User/component/ProfileImage.jsx";
-import { useAuthState } from "@/shared/state/context.jsx";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { ProfileImage } from '@/pages/User/component/ProfileImage.jsx';
+import { useAuthState } from '@/shared/state/context.jsx';
 
 export function UserListItem({ user }) {
   let authState = useAuthState();
@@ -17,31 +17,31 @@ export function UserListItem({ user }) {
     <tr
       /*className={selected ? 'table-primary' : ''}*/ onClick={() => {
         // setSelected(!selected)
-        navigate("/user/" + user.id);
+        navigate('/user/' + user.id);
       }}
-      style={{ cursor: "pointer" }}
+      style={{ cursor: 'pointer' }}
     >
       <th
-        className={user.id === authState.id ? "selected" : ""}
+        className={user.id === authState.id ? 'selected' : ''}
         style={{ ...spreadElements }}
       >
-        <ProfileImage alt={"profile"} />
-        <span className={"ms-2"}>{user.username}</span>
+        <ProfileImage alt={'profile'} />
+        <span className={'ms-2'}>{user.username}</span>
       </th>
       <td
-        className={user.id === authState.id ? "selected" : ""}
+        className={user.id === authState.id ? 'selected' : ''}
         style={{ ...spreadElements }}
       >
         {user.email}
       </td>
       <td
-        className={user.id === authState.id ? "selected" : ""}
+        className={user.id === authState.id ? 'selected' : ''}
         style={{ ...spreadElements }}
       >
         {user.image}
       </td>
       <td
-        className={user.id === authState.id ? "selected" : ""}
+        className={user.id === authState.id ? 'selected' : ''}
         style={{ ...spreadElements }}
       >
         {user.name}

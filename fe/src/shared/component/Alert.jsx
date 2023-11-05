@@ -1,11 +1,11 @@
 export function Alert(props) {
   const { styleType, message, center } = props;
-  let textCenter = "";
+  let textCenter = '';
   if (center) {
-    textCenter = "text-center";
+    textCenter = 'text-center';
   }
   return (
-    <div className={`${textCenter} alert alert-${styleType || "success"}`}>
+    <div className={`${textCenter} alert alert-${styleType || 'success'}`}>
       {message}
     </div>
   );

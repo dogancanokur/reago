@@ -1,6 +1,6 @@
-import axios from "axios";
-import { i18nInstance } from "@/locales/index.js";
-import { loadToken, storeToken } from "@/state/storage.js";
+import axios from 'axios';
+import { i18nInstance } from '@/locales/index.js';
+import { loadToken, storeToken } from '@/state/storage.js';
 
 const http = axios.create();
 
@@ -12,9 +12,9 @@ export function setToken(token) {
 }
 
 http.interceptors.request.use((config) => {
-  config.headers["Accept-Language"] = i18nInstance.language;
+  config.headers['Accept-Language'] = i18nInstance.language;
   if (authToken) {
-    config.headers["Authorization"] = `${authToken.prefix} ${authToken.token}`;
+    config.headers['Authorization'] = `${authToken.prefix} ${authToken.token}`;
   }
   return config;
 });

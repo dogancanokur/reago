@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Alert } from "@/shared/component/Alert.jsx";
-import { loadUsers } from "@/pages/User/api.js";
-import { Spinner } from "@/shared/component/Spinner.jsx";
-import { UserListItem } from "@/pages/User/component/UserListItem.jsx";
+import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Alert } from '@/shared/component/Alert.jsx';
+import { loadUsers } from '@/pages/User/api.js';
+import { Spinner } from '@/shared/component/Spinner.jsx';
+import { UserListItem } from '@/pages/User/component/UserListItem.jsx';
 
 export function UserListPage() {
   const { t } = useTranslation();
@@ -41,23 +41,23 @@ export function UserListPage() {
   // }, []);
 
   return (
-    <div className={"card"}>
-      <div className={"card-header text-center fw-bold fs-4"}>
-        {t("user-list")}
+    <div className={'card'}>
+      <div className={'card-header text-center fw-bold fs-4'}>
+        {t('user-list')}
       </div>
       {errorMessage && (
-        <div className={"m-2"}>
-          <Alert message={errorMessage} styleType={"danger"} center={true} />
+        <div className={'m-2'}>
+          <Alert message={errorMessage} styleType={'danger'} center={true} />
         </div>
       )}
-      <div className={"card-body"}>
+      <div className={'card-body'}>
         <table className="table">
           <thead>
             <tr>
-              <th scope="col">{t("username")}</th>
-              <th scope="col">{t("email")}</th>
-              <th scope="col">{t("image")}</th>
-              <th scope="col">{t("name")}</th>
+              <th scope="col">{t('username')}</th>
+              <th scope="col">{t('email')}</th>
+              <th scope="col">{t('image')}</th>
+              <th scope="col">{t('name')}</th>
             </tr>
           </thead>
           <tbody>
@@ -67,24 +67,24 @@ export function UserListPage() {
           </tbody>
         </table>
       </div>
-      <div className={"card-footer d-flex justify-content-around"}>
+      <div className={'card-footer d-flex justify-content-around'}>
         {!apiProgress && (
           <button
-            className={"btn btn-outline-secondary btn-sm"}
+            className={'btn btn-outline-secondary btn-sm'}
             disabled={userPage.first}
             onClick={() => getUsers(userPage.number - 1)}
           >
-            {t("previous")}
+            {t('previous')}
           </button>
         )}
         {apiProgress && <Spinner big={false} />}
         {!apiProgress && (
           <button
-            className={"btn btn-outline-primary btn-sm"}
+            className={'btn btn-outline-primary btn-sm'}
             disabled={userPage.last}
             onClick={() => getUsers(userPage.number + 1)}
           >
-            {t("next")}
+            {t('next')}
           </button>
         )}
       </div>

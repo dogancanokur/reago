@@ -1,9 +1,9 @@
-import { Spinner } from "@/shared/component/Spinner.jsx";
+import { Spinner } from '@/shared/component/Spinner.jsx';
 
 export function Button({
   disabled,
   type,
-  className = "btn-primary",
+  className = 'btn-primary',
   text,
   apiProgress,
   onClick,
@@ -11,9 +11,9 @@ export function Button({
   return (
     <button
       disabled={disabled}
-      type={type || "submit"}
+      type={type || 'submit'}
       onClick={onClick}
-      className={"btn " + className}
+      className={'btn ' + className}
     >
       {apiProgress && <Spinner />} {text}
     </button>

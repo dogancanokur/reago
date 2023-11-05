@@ -1,9 +1,9 @@
-import { useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
-import { useAuthDispatch, useAuthState } from "@/shared/state/context.jsx";
-import { updateUser } from "@/pages/User/component/api.js";
-import { Input } from "@/shared/component/Input.jsx";
-import { Button } from "@/shared/component/Button.jsx";
+import { useTranslation } from 'react-i18next';
+import { useEffect, useState } from 'react';
+import { useAuthDispatch, useAuthState } from '@/shared/state/context.jsx';
+import { updateUser } from '@/pages/User/component/api.js';
+import { Input } from '@/shared/component/Input.jsx';
+import { Button } from '@/shared/component/Button.jsx';
 
 export function UserEditMode({ setGeneralError, setEditMode, setTempImage }) {
   const { t } = useTranslation();
@@ -33,7 +33,7 @@ export function UserEditMode({ setGeneralError, setEditMode, setTempImage }) {
         image: newImage,
       });
       dispatch({
-        type: "user-update-success",
+        type: 'user-update-success',
         data: { username: newUsername, image: newImage },
       });
       setEditMode(false);
@@ -47,7 +47,7 @@ export function UserEditMode({ setGeneralError, setEditMode, setTempImage }) {
           setGeneralError(axiosError.response.data.message);
         }
       } else {
-        setGeneralError(t("genericError"));
+        setGeneralError(t('genericError'));
       }
     } finally {
       setApiProgress(false);
@@ -79,28 +79,28 @@ export function UserEditMode({ setGeneralError, setEditMode, setTempImage }) {
   return (
     <form onSubmit={onClickSave}>
       <Input
-        id={"username"}
-        name={"username"}
-        labelText={t("username")}
+        id={'username'}
+        name={'username'}
+        labelText={t('username')}
         defaultValue={authState.username}
-        validationError={errors["username"]}
+        validationError={errors['username']}
         onChange={onChangeUsername}
       />
       {/*Select Image*/}
       <Input
-        id={"image"}
-        name={"image"}
-        labelText={t("image")}
-        type={"file"}
+        id={'image'}
+        name={'image'}
+        labelText={t('image')}
+        type={'file'}
         onChange={onSelectImage}
       />
 
-      <Button text={t("save")} apiProgress={apiProgress} />
+      <Button text={t('save')} apiProgress={apiProgress} />
       <div className="d-inline m-1"></div>
       <Button
         className="btn-outline-secondary"
-        text={t("cancel")}
-        type={"button"}
+        text={t('cancel')}
+        type={'button'}
         onClick={onClickCancel}
       />
     </form>

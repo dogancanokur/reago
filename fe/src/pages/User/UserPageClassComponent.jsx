@@ -1,11 +1,11 @@
 // eslint-disable-next-line no-unused-vars
-import React, { Component } from "react";
-import { useParams } from "react-router-dom";
-import { getUser } from "@/pages/User/api.js";
-import defaultImage from "@/assets/profile.png";
-import { Alert } from "@/shared/component/Alert.jsx";
-import { Spinner } from "@/shared/component/Spinner.jsx";
-import { withTranslation } from "react-i18next";
+import React, { Component } from 'react';
+import { useParams } from 'react-router-dom';
+import { getUser } from '@/pages/User/api.js';
+import defaultImage from '@/assets/profile.png';
+import { Alert } from '@/shared/component/Alert.jsx';
+import { Spinner } from '@/shared/component/Spinner.jsx';
+import { withTranslation } from 'react-i18next';
 
 export class UserPageClassComponent extends Component {
   state = {
@@ -27,12 +27,12 @@ export class UserPageClassComponent extends Component {
       if (err.response.status === 400) {
         this.setState({
           user: undefined,
-          errorMessage: this.props.t("userNotFoundError"),
+          errorMessage: this.props.t('userNotFoundError'),
         });
       } else {
         this.setState({
           user: undefined,
-          errorMessage: this.props.t("userNotFoundError"),
+          errorMessage: this.props.t('userNotFoundError'),
         });
       }
     } finally {
@@ -53,7 +53,7 @@ export class UserPageClassComponent extends Component {
     }
     if (user) {
       return (
-        <div className="card" style={{ width: "100%" }}>
+        <div className="card" style={{ width: '100%' }}>
           <img
             src={defaultImage}
             className="mx-auto"
@@ -75,7 +75,7 @@ export class UserPageClassComponent extends Component {
     return (
       <div>
         {errorMessage && (
-          <Alert styleType={"danger"} message={errorMessage} center={false} />
+          <Alert styleType={'danger'} message={errorMessage} center={false} />
         )}
       </div>
     );

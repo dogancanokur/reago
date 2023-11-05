@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
-import reagoLogo from "@/assets/reago.svg";
-import { useTranslation } from "react-i18next";
-import { useAuthDispatch, useAuthState } from "@/shared/state/context.jsx";
-import { ProfileImage } from "@/pages/User/component/ProfileImage.jsx";
+import { Link } from 'react-router-dom';
+import reagoLogo from '@/assets/reago.svg';
+import { useTranslation } from 'react-i18next';
+import { useAuthDispatch, useAuthState } from '@/shared/state/context.jsx';
+import { ProfileImage } from '@/pages/User/component/ProfileImage.jsx';
 
 export function NavBar() {
   const { t } = useTranslation();
@@ -12,7 +12,7 @@ export function NavBar() {
   return (
     <nav className="navbar navbar-expand bg-body-tertiary shadow-sm">
       <div className="container-fluid">
-        <Link className={"navbar-brand"} to={"/"}>
+        <Link className={'navbar-brand'} to={'/'}>
           <img
             src={reagoLogo}
             alt="Reago logo"
@@ -21,43 +21,47 @@ export function NavBar() {
           />
           &nbsp;Reago
         </Link>
-        <ul className={"navbar-nav"}>
-          <li className={"nav-item"}>
-            <Link className={"nav-link"} to={"/users"}>
-              {t("user-list")}
+        <ul className={'navbar-nav'}>
+          <li className={'nav-item'}>
+            <Link className={'nav-link'} to={'/users'}>
+              {t('user-list')}
             </Link>
           </li>
           {authState.id === 0 && (
             <>
-              <li className={"nav-item"}>
-                <Link className={"nav-link"} to={"/signup"}>
-                  {t("sign-up")}
+              <li className={'nav-item'}>
+                <Link className={'nav-link'} to={'/signup'}>
+                  {t('sign-up')}
                 </Link>
               </li>
-              <li className={"nav-item"}>
-                <Link className={"nav-link"} to={"/login"}>
-                  {t("login")}
+              <li className={'nav-item'}>
+                <Link className={'nav-link'} to={'/login'}>
+                  {t('login')}
                 </Link>
               </li>
             </>
           )}
           {authState.id !== 0 && (
             <>
-              <li className={"nav-item"}>
-                <Link className={"nav-link"} to={`/user/${authState.id}`}>
-                  <ProfileImage alt={"profileImage"} width={30} image={authState.image} />
-                  <span className={"ms-2"}>@{authState.username}</span>
+              <li className={'nav-item'}>
+                <Link className={'nav-link'} to={`/user/${authState.id}`}>
+                  <ProfileImage
+                    alt={'profileImage'}
+                    width={30}
+                    image={authState.image}
+                  />
+                  <span className={'ms-2'}>@{authState.username}</span>
                 </Link>
               </li>
-              <li className={"nav-item"}>
+              <li className={'nav-item'}>
                 <Link
-                  className={"nav-link"}
-                  to={"/"}
+                  className={'nav-link'}
+                  to={'/'}
                   onClick={() => {
-                    authDispatch({ type: "logoutSuccess" });
+                    authDispatch({ type: 'logoutSuccess' });
                   }}
                 >
-                  {t("logout")}
+                  {t('logout')}
                 </Link>
               </li>
             </>
