@@ -36,5 +36,6 @@ public class User {
   private Boolean active = Boolean.FALSE;
 
   @Column(name = "image")
+  @Lob
   private String image;
 }

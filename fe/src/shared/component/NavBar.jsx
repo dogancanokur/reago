@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import reagoLogo from "@/assets/reago.svg";
 import { useTranslation } from "react-i18next";
 import { useAuthDispatch, useAuthState } from "@/shared/state/context.jsx";
+import { ProfileImage } from "@/pages/User/component/ProfileImage.jsx";
 
 export function NavBar() {
   const { t } = useTranslation();
@@ -44,7 +45,8 @@ export function NavBar() {
             <>
               <li className={"nav-item"}>
                 <Link className={"nav-link"} to={`/user/${authState.id}`}>
-                  @{authState.username}
+                  <ProfileImage alt={"profileImage"} width={30} image={authState.image} />
+                  <span className={"ms-2"}>@{authState.username}</span>
                 </Link>
               </li>
               <li className={"nav-item"}>

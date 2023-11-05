@@ -91,6 +91,7 @@ public class UserServiceImpl implements UserService {
 
     User user = findByUserId(userId).orElseThrow(() -> new NotFoundException(userId));
     user.setUsername(userInput.getUsername());
+    user.setImage(userInput.getImage());
     return new UserOutput(userRepository.save(user));
   }
 

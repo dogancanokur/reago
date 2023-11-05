@@ -14,4 +14,6 @@ public class UserInput implements Serializable {
   @NotBlank(message = "{warning.user.username.not-blank}")
   @Size(message = "{warning.user.username.length}", min = 3, max = 25)
   String username;
+
+  String image;
 }
