@@ -15,14 +15,14 @@ public class CurrentUser implements UserDetails {
   private String username;
   private String password;
   private String email;
-  private Boolean isActive;
+  private Boolean enabled;
 
   public CurrentUser(User user) {
     this.id = user.getId();
     this.username = user.getUsername();
     this.password = user.getPassword();
     this.email = user.getEmail();
-    this.isActive = user.getActive();
+    this.enabled = user.getActive();
   }
 
   @Override
@@ -57,6 +57,6 @@ public class CurrentUser implements UserDetails {
 
   @Override
   public boolean isEnabled() {
-    return Boolean.TRUE.equals(this.isActive);
+    return Boolean.TRUE.equals(this.enabled);
   }
 }

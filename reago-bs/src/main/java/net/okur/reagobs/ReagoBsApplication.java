@@ -8,7 +8,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
@@ -24,7 +23,7 @@ public class ReagoBsApplication {
   @Profile("dev")
   CommandLineRunner userCreation(UserRepository userRepository) {
     return args -> {
-      for (var i = 1; i <= 60; i++) {
+      for (var i = 1; i <= 10; i++) {
         User user = new User();
         user.setUsername("user_" + i);
         user.setEmail("user%d@reago.com".formatted(i));
@@ -33,6 +32,14 @@ public class ReagoBsApplication {
         user.setName("%d User Reago".formatted(i));
         userRepository.save(user);
       }
+
+      // disabled user
+      User user = new User();
+      user.setUsername("faecon");
+      user.setEmail("faecon@reago.com");
+      user.setPassword(passwordEncoder.encode("admin"));
+      user.setActive(Boolean.FALSE);
+      userRepository.save(user);
     };
   }
 }
