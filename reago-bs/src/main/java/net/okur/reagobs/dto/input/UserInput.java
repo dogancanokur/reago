@@ -4,10 +4,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
+import lombok.Data;
 import lombok.Value;
 
 /** DTO for {@link net.okur.reagobs.entity.User} */
-@Value
+@Data
 public class UserInput implements Serializable {
   @NotNull Long id;
 

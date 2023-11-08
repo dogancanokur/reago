@@ -13,6 +13,7 @@ import net.okur.reagobs.entity.User;
 import net.okur.reagobs.error.exception.ActivationNotificationException;
 import net.okur.reagobs.error.exception.InvalidTokenException;
 import net.okur.reagobs.error.exception.NotFoundException;
+import net.okur.reagobs.file.FileService;
 import net.okur.reagobs.mail.EmailService;
 import net.okur.reagobs.repository.UserRepository;
 import net.okur.reagobs.service.UserService;
@@ -30,13 +31,18 @@ public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
   private final EmailService emailService;
   private final PasswordEncoder passwordEncoder;
+  private final FileService fileService;
 
   @Autowired
   public UserServiceImpl(
-      UserRepository userRepository, EmailService emailService, PasswordEncoder passwordEncoder) {
+      UserRepository userRepository,
+      EmailService emailService,
+      PasswordEncoder passwordEncoder,
+      FileService fileService) {
     this.userRepository = userRepository;
     this.emailService = emailService;
     this.passwordEncoder = passwordEncoder;
+    this.fileService = fileService;
   }
 
   public static CurrentUser getUserPrincipal() {
@@ -92,8 +98,10 @@ public class UserServiceImpl implements UserService {
 
     User user = findByUserId(userId).orElseThrow(() -> new NotFoundException(userId));
     user.setUsername(userInput.getUsername());
+
     if (StringUtils.hasText(userInput.getImage())) {
-      user.setImage(userInput.getImage());
+      String fileName = fileService.saveBase64StringAsFile(userInput.getImage());
+      user.setImage(fileName);
     }
 
     return new UserOutput(userRepository.save(user));
