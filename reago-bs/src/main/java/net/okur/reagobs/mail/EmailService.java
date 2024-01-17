@@ -17,12 +17,21 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 
+/**
+ * This class is used to send emails.
+ * It is annotated with @Service to indicate that it is a service class.
+ * It uses the JavaMailSenderImpl class to send emails.
+ */
 @Service
 public class EmailService {
 
   private final AppConfig appConfig;
   JavaMailSenderImpl javaMailSender;
-  private String activationEmail = """
+
+  /**
+   * The HTML content of the activation email.
+   */
+  private final String activationEmail = """
       <html>
         <h1>Active Account</h1>
         <body>
@@ -32,11 +41,19 @@ public class EmailService {
 
   private String mailTest = "activationMail.html";
 
+  /**
+   * Constructs a new EmailService with the specified AppConfig.
+   *
+   * @param appConfig the AppConfig to be used for email configuration
+   */
   @Autowired
   public EmailService(AppConfig appConfig) {
     this.appConfig = appConfig;
   }
 
+  /**
+   * Initializes the JavaMailSenderImpl with the email configuration from the AppConfig.
+   */
   @PostConstruct
   private void initialize() {
     this.javaMailSender = new JavaMailSenderImpl();
@@ -50,6 +67,14 @@ public class EmailService {
     properties.put("mail.smtp.starttls.enable", "true");
   }
 
+  /**
+   * Sends an activation email to the specified email address.
+   *
+   * @param email the email address to which the activation email is sent
+   * @param username the username of the user
+   * @param activationToken the activation token for the user
+   * @throws Exception if an error occurs while sending the email
+   */
   public void sendActivationEmail(String email, String username, String activationToken) throws Exception {
 
     MimeMessage mimeMessage = javaMailSender.createMimeMessage();
@@ -65,6 +90,14 @@ public class EmailService {
     this.javaMailSender.send(mimeMessage);
   }
 
+  /**
+   * Creates the body of the activation email.
+   *
+   * @param username the username of the user
+   * @param activationToken the activation token for the user
+   * @return the body of the activation email
+   * @throws IOException if an error occurs while reading the HTML file
+   */
   private String createActivationMail(String username, String activationToken) throws IOException {
     String htmlFilePath = appConfig.getActivationMailHtml() + "_" + LocaleContextHolder.getLocale() + ".html";
     Resource resource = new ClassPathResource(htmlFilePath);
