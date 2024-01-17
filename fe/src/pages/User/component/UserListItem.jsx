@@ -25,7 +25,7 @@ export function UserListItem({ user }) {
         className={user.id === authState.id ? 'selected' : ''}
         style={{ ...spreadElements }}
       >
-        <ProfileImage alt={'profile'} image={user.image}/>
+        <ProfileImage alt={'profile'} image={user.image} />
         <span className={'ms-2'}>{user.username}</span>
       </th>
       <td

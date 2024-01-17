@@ -8,7 +8,7 @@
 export const Input = (props) => {
   const { id, name, labelText, validationError, onChange, defaultValue } =
     props;
-    const type = props.type === '' ? 'text' : props.type;
+  const type = props.type === '' ? 'text' : props.type;
 
   return (
     <div className="mb-3">

@@ -13,6 +13,7 @@ export function UserEditMode({ setGeneralError, setEditMode, setTempImage }) {
   const dispatch = useAuthDispatch();
   const [newUsername, setNewUsername] = useState(authState.username);
   const [newImage, setNewImage] = useState();
+
   useEffect(() => {
     setTempImage(newImage);
   }, [newImage]);
@@ -21,11 +22,13 @@ export function UserEditMode({ setGeneralError, setEditMode, setTempImage }) {
     setNewUsername(event.target.value);
     setErrors({});
   };
+
   const onClickSave = async () => {
     event.preventDefault();
     setApiProgress(true);
     setErrors({});
     setGeneralError();
+
     try {
       const { data } = await updateUser({
         id: authState.id,
@@ -53,6 +56,7 @@ export function UserEditMode({ setGeneralError, setEditMode, setTempImage }) {
       setApiProgress(false);
     }
   };
+
   const onClickCancel = () => {
     setEditMode(false);
     setNewUsername(authState.username);
@@ -62,6 +66,10 @@ export function UserEditMode({ setGeneralError, setEditMode, setTempImage }) {
   };
 
   const onSelectImage = () => {
+    setErrors((lastErrors) => {
+      return { ...lastErrors, image: undefined };
+    });
+
     if (event.target.files.length < 1) {
       return;
     }
@@ -93,6 +101,7 @@ export function UserEditMode({ setGeneralError, setEditMode, setTempImage }) {
         labelText={t('image')}
         type={'file'}
         onChange={onSelectImage}
+        validationError={errors['image']}
       />
 
       <Button text={t('save')} apiProgress={apiProgress} />

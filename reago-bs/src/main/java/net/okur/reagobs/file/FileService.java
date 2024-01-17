@@ -7,6 +7,7 @@ import java.util.Base64;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import net.okur.reagobs.configuration.AppConfig;
+import org.apache.tika.Tika;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class FileService {
   private final AppConfig appConfig;
+
+  Tika tika = new Tika();
 
   @Autowired
   public FileService(AppConfig appConfig) {
@@ -45,7 +48,7 @@ public class FileService {
       OutputStream outputStream = new FileOutputStream(path.toFile());
 
       // Decode the Base64 string. The actual image data is after the comma in the Base64 string
-      byte[] base64decoded = Base64.getDecoder().decode(base64image.split(",")[1]);
+      byte[] base64decoded = decodedImage(base64image);
 
       // Write the decoded Base64 string to the file
       outputStream.write(base64decoded);
@@ -64,5 +67,13 @@ public class FileService {
 
     // Return null if an error occurs
     return null;
+  }
+
+  public String detectType(String value) {
+    return tika.detect(decodedImage(value));
+  }
+
+  private byte[] decodedImage(String encodedImage) {
+    return Base64.getDecoder().decode(encodedImage.split(",")[1]);
   }
 }
